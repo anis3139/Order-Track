@@ -25,19 +25,65 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/second-page',
-      name: 'second-page',
-      component: () => import('@/views/SecondPage.vue'),
+      path: '/category',
+      name: 'category',
+      component: () => import('@/views/categories/CategoryList.vue'),
       meta: {
-        pageTitle: 'Second Page',
+        pageTitle: 'Category',
         breadcrumb: [
           {
-            text: 'Second Page',
+            text: 'Category List',
+            active: true,
+          },
+        ],
+      },
+    }, 
+    {
+      path: '/category-add',
+      name: 'category-add',
+      component: () => import('@/views/categories/CategoryAdd.vue'),
+      meta: {
+        pageTitle: 'Category Add',
+        breadcrumb: [
+          {
+            text: 'Category Add',
             active: true,
           },
         ],
       },
     },
+    {
+      path: '/category-edit',
+      name: 'category-edit',
+      component: () => import('@/views/categories/CategoryEdit.vue'),
+      meta: {
+        pageTitle: 'Category Edit',
+        breadcrumb: [
+          {
+            text: 'Category Edit',
+            active: true,
+          },
+        ],
+      },
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     {
       path: '/login',
       name: 'login',

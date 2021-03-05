@@ -1,6 +1,6 @@
 export default [
   {
-    header: 'Pages',
+    header: 'Dashboards',
     icon: 'FileIcon',
     children: [
       {
