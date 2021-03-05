@@ -1,7 +1,5 @@
 <template>
- <section>
-     
-      <div>
+  <div>
     <!-- search input -->
     <div class="custom-search d-flex justify-content-end">
       <b-form-group>
@@ -49,7 +47,10 @@
           v-if="props.column.field === 'fullName'"
           class="text-nowrap"
         >
-          
+          <b-avatar
+            :src="props.row.avatar"
+            class="mx-1"
+          />
           <span class="text-nowrap">{{ props.row.fullName }}</span>
         </span>
 
@@ -148,12 +149,11 @@
       </template>
     </vue-good-table>
   </div>
- </section>
 </template>
 
 <script>
 import {
-  BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdown, BDropdownItem, 
+  BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdown, BDropdownItem,
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
 import 'vue-good-table/dist/vue-good-table.css'
@@ -180,31 +180,28 @@ export default {
           label: 'Name',
           field: 'fullName',
         },
-        
+        {
+          label: 'Email',
+          field: 'email',
+        },
+        {
+          label: 'Date',
+          field: 'startDate',
+        },
+        {
+          label: 'Salary',
+          field: 'salary',
+        },
+        {
+          label: 'Status',
+          field: 'status',
+        },
         {
           label: 'Action',
           field: 'action',
         },
       ],
-      rows: [
-          {
-          "fullName": "Anis"
-      },{
-          "fullName": "Anis"
-      },{
-          "fullName": "fgfgfg"
-      },{
-          "fullName": "fggfgf"
-      },{
-          "fullName": "gffg"
-      },{
-          "fullName": "Anis"
-      },{
-          "fullName": "Anis"
-      },{
-          "fullName": "Anis"
-      },
-      ],
+      rows: [],
       searchTerm: '',
       status: [{
         1: 'Current',

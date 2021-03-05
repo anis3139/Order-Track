@@ -9,4 +9,9 @@ export default [
     route: 'category',
     icon: 'FileIcon',
   },
+  {
+    title: 'Products',
+    route: 'products',
+    icon: 'FileIcon',
+  },
 ]

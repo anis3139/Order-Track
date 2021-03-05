@@ -67,6 +67,50 @@ const router = new VueRouter({
       },
     },
 
+    {
+      path: '/products',
+      name: 'products',
+      component: () => import('@/views/products/ProductsList.vue'),
+      meta: {
+        pageTitle: 'Products',
+        breadcrumb: [
+          {
+            text: 'Products List',
+            active: true,
+          },
+        ],
+      },
+    }, 
+    {
+      path: '/product-add',
+      name: 'product-add',
+      component: () => import('@/views/products/ProductsAdd.vue'),
+      meta: {
+        pageTitle: 'Product Add',
+        breadcrumb: [
+          {
+            text: 'Product Add',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/product-edit',
+      name: 'product-edit',
+      component: () => import('@/views/products/ProductsEdit.vue'),
+      meta: {
+        pageTitle: 'Product Edit',
+        breadcrumb: [
+          {
+            text: 'Product Edit',
+            active: true,
+          },
+        ],
+      },
+    },
+
+
 
 
 

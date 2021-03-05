@@ -1,7 +1,5 @@
 <template>
- <section>
-     
-      <div>
+  <div>
     <!-- search input -->
     <div class="custom-search d-flex justify-content-end">
       <b-form-group>
@@ -148,12 +146,11 @@
       </template>
     </vue-good-table>
   </div>
- </section>
 </template>
 
 <script>
 import {
-  BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdown, BDropdownItem, 
+  BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdown, BDropdownItem,
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
 import 'vue-good-table/dist/vue-good-table.css'
@@ -186,25 +183,9 @@ export default {
           field: 'action',
         },
       ],
-      rows: [
-          {
+      rows: [{
           "fullName": "Anis"
-      },{
-          "fullName": "Anis"
-      },{
-          "fullName": "fgfgfg"
-      },{
-          "fullName": "fggfgf"
-      },{
-          "fullName": "gffg"
-      },{
-          "fullName": "Anis"
-      },{
-          "fullName": "Anis"
-      },{
-          "fullName": "Anis"
-      },
-      ],
+      }],
       searchTerm: '',
       status: [{
         1: 'Current',
