@@ -16,6 +16,7 @@ const router = new VueRouter({
       component: () => import('@/views/Home.vue'),
       meta: {
         pageTitle: 'Home',
+        authOnly: true,
         breadcrumb: [
           {
             text: 'Home',
@@ -30,6 +31,7 @@ const router = new VueRouter({
       component: () => import('@/views/categories/CategoryList.vue'),
       meta: {
         pageTitle: 'Category',
+        authOnly: true,
         breadcrumb: [
           {
             text: 'Category List',
@@ -44,6 +46,7 @@ const router = new VueRouter({
       component: () => import('@/views/categories/CategoryAdd.vue'),
       meta: {
         pageTitle: 'Category Add',
+        authOnly: true,
         breadcrumb: [
           {
             text: 'Category Add',
@@ -58,6 +61,7 @@ const router = new VueRouter({
       component: () => import('@/views/categories/CategoryEdit.vue'),
       meta: {
         pageTitle: 'Category Edit',
+        authOnly: true,
         breadcrumb: [
           {
             text: 'Category Edit',
@@ -73,6 +77,7 @@ const router = new VueRouter({
       component: () => import('@/views/products/ProductsList.vue'),
       meta: {
         pageTitle: 'Products',
+        authOnly: true,
         breadcrumb: [
           {
             text: 'Products List',
@@ -87,6 +92,7 @@ const router = new VueRouter({
       component: () => import('@/views/products/ProductsAdd.vue'),
       meta: {
         pageTitle: 'Product Add',
+        authOnly: true,
         breadcrumb: [
           {
             text: 'Product Add',
@@ -101,6 +107,7 @@ const router = new VueRouter({
       component: () => import('@/views/products/ProductsEdit.vue'),
       meta: {
         pageTitle: 'Product Edit',
+        authOnly: true,
         breadcrumb: [
           {
             text: 'Product Edit',
@@ -118,30 +125,34 @@ const router = new VueRouter({
 
 
 
-
-
-
-
-
-
-
-
-
-
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('@/views/Registration.vue'),
+      meta: {
+        layout: 'full',
+       guestOnly: true
+      },
+    },
     {
       path: '/login',
       name: 'login',
       component: () => import('@/views/Login.vue'),
       meta: {
         layout: 'full',
+        guestOnly: true
       },
     },
+
+
+
     {
       path: '/error-404',
       name: 'error-404',
       component: () => import('@/views/error/Error404.vue'),
       meta: {
         layout: 'full',
+        authOnly: true,
       },
     },
     {
@@ -162,19 +173,56 @@ router.afterEach(() => {
 })
 
 
+
+
+
+
+
+
+
+function isLoggedIn() {
+    return localStorage.getItem("token");
+}
+
 router.beforeEach((to, from, next) => {
-  let isAuthenticated= '';
-  let authUser=localStorage.getItem('token')? localStorage.getItem('token'):false;
-  if (authUser) {
-    isAuthenticated=authUser;
-  }else{
-    isAuthenticated=false;
-  }
-  if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' })
-  else if (to.name == 'login' && isAuthenticated){
-    next({name:"home"})
-  }
-  else next()
-})
+    if (to.matched.some(record => record.meta.authOnly)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (!isLoggedIn()) {
+            next({
+                path: "/login",
+                query: { redirect: to.fullPath }
+            });
+        } else {
+            next();
+        }
+    } else if (to.matched.some(record => record.meta.guestOnly)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (isLoggedIn()) {
+            next({
+                path: "/",
+                // query: { redirect: to.fullPath }
+            });
+        } else {
+            next();
+        }
+    } else {
+        next(); // make sure to always call next()!
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export default router

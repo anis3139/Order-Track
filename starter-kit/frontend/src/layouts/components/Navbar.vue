@@ -88,7 +88,7 @@
             icon="LogOutIcon"
             class="mr-50"
           />
-          <span>Logout</span>
+          <span><a href="" @click.prevent="userLogout()">Logout</a></span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
@@ -119,5 +119,11 @@ export default {
       default: () => {},
     },
   },
+  methods:{
+    userLogout(){
+      localStorage.removeItem("token")
+      this.$router.push('/login')
+    }
+  }
 }
 </script>

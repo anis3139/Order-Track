@@ -25,12 +25,30 @@
             Welcome to Purchel Kothay! 👋
           </b-card-title>
           <b-card-text class="mb-2">
-            Please sign-in to your account and start the adventure
+            Please sign-up to your account and start the adventure
           </b-card-text>
 
           <!-- form -->
           <validation-observer ref="loginValidation">
-            <b-form class="auth-login-form mt-2" @submit.prevent="userLogin">
+            <b-form class="auth-login-form mt-2" @submit.prevent="userRegister">
+              <!-- name -->
+              <b-form-group label="name" label-for="name">
+                <validation-provider
+                  #default="{ errors }"
+                  name="name"
+                  rules="required|name"
+                >
+                  <b-form-input
+                    id="name"
+                    v-model="name"
+                    :state="errors.length > 0 ? false : null"
+                    name="name"
+                    placeholder="Your Name"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
               <!-- email -->
               <b-form-group label="Email" label-for="login-email">
                 <validation-provider
@@ -49,14 +67,8 @@
                 </validation-provider>
               </b-form-group>
 
-              <!-- forgot password -->
+              <!-- password -->
               <b-form-group>
-                <div class="d-flex justify-content-between">
-                  <label for="login-password">Password</label>
-                  <b-link :to="{ name: 'auth-forgot-password-v2' }">
-                    <small>Forgot Password?</small>
-                  </b-link>
-                </div>
                 <validation-provider
                   #default="{ errors }"
                   name="Password"
@@ -87,15 +99,36 @@
                 </validation-provider>
               </b-form-group>
 
-              <!-- checkbox -->
+              <!-- Confirmed password -->
               <b-form-group>
-                <b-form-checkbox
-                  id="remember-me"
-                  v-model="status"
-                  name="checkbox-1"
+                <validation-provider
+                  #default="{ errors }"
+                  name="password_confirmation"
+                  rules="required"
                 >
-                  Remember Me
-                </b-form-checkbox>
+                  <b-input-group
+                    class="input-group-merge"
+                    :class="errors.length > 0 ? 'is-invalid' : null"
+                  >
+                    <b-form-input
+                      id="password_confirmation"
+                      v-model="password_confirmation"
+                      :state="errors.length > 0 ? false : null"
+                      class="form-control-merge"
+                      :type="passwordFieldType"
+                      name="password_confirmation"
+                      placeholder="Confirmed Password"
+                    />
+                    <b-input-group-append is-text>
+                      <feather-icon
+                        class="cursor-pointer"
+                        :icon="passwordToggleIcon"
+                        @click="togglePasswordVisibility"
+                      />
+                    </b-input-group-append>
+                  </b-input-group>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
               </b-form-group>
 
               <!-- submit buttons -->
@@ -105,15 +138,15 @@
                 block
                 @click="validationForm"
               >
-                Sign in
+                Sign up
               </b-button>
             </b-form>
           </validation-observer>
 
           <b-card-text class="text-center mt-2">
-            <span>New on our platform? </span>
-            <b-link :to="{ name: 'register' }">
-              <span>&nbsp;Create an account</span>
+            <span>have Account? </span>
+            <b-link :to="{ name: 'login' }">
+              <span>&nbsp;Login Now</span>
             </b-link>
           </b-card-text>
 
@@ -190,9 +223,11 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
-      status: "",
-      password: "",
+      name: "",
       userEmail: "",
+      password: "",
+      password_confirmation: "",
+
       sideImg: require("@/assets/images/pages/login-v2.svg"),
       // validation rulesimport store from '@/store/index'
       required,
@@ -216,34 +251,35 @@ export default {
     validationForm() {
       this.$refs.loginValidation.validate().then((success) => {
         if (success) {
-         
+          userLogin();
         }
       });
     },
-    userLogin() {
-      axios.post("api/auth/login", {
-        email:this.userEmail,
-        password:this.password
-      })
+    userRegister() {
+      axios
+        .post("api/auth/register", {
+          name: this.name,
+          email: this.userEmail,
+          password: this.password,
+          password_confirmation: this.password_confirmation,
+        })
         .then((response) => {
           console.log(response.data);
-           this.$toast({
+          this.$toast({
             component: ToastificationContent,
             props: {
-              title: "Login Success",
+              title: "Registration Successfull",
               icon: "EditIcon",
               variant: "success",
             },
           });
-          localStorage.setItem('token', response.data.access_token)
-          
-          this.$router.push('/')
+          this.$router.push("/login");
         })
         .catch((error) => {
-         this.$toast({
+          this.$toast({
             component: ToastificationContent,
             props: {
-              title: "Login Failed",
+              title: "Registration Failed",
               icon: "EditIcon",
               variant: "warning",
             },
