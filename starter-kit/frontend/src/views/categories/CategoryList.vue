@@ -176,32 +176,7 @@ export default {
           field: "action",
         },
       ],
-      rows: [
-        {
-          fullName: "Anis",
-        },
-        {
-          fullName: "Anis",
-        },
-        {
-          fullName: "fgfgfg",
-        },
-        {
-          fullName: "fggfgf",
-        },
-        {
-          fullName: "gffg",
-        },
-        {
-          fullName: "Anis",
-        },
-        {
-          fullName: "Anis",
-        },
-        {
-          fullName: "Anis",
-        },
-      ],
+      rows: [],
       searchTerm: "",
       status: [
         {
@@ -247,8 +222,9 @@ export default {
     },
   },
   created() {
-    this.$http.get("/good-table/basic").then((res) => {
-      this.rows = res.data;
+    this.$http.get("V1/category").then((res) => {
+      console.log(res.data.CateogoryAll);
+      this.rows = res.data.CateogoryAll;
     });
   },
 };

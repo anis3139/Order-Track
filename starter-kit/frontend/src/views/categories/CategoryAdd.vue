@@ -24,7 +24,7 @@
           <b-button
             variant="primary"
             type="submit"
-            @click.prevent="validationForm"
+            @click="validationForm"
           >
             Submit
           </b-button>
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import {
   BFormInput,
@@ -76,11 +77,10 @@ export default {
     },
 
     categoryAdd() {
-      alert("hello");
       axios
         .post("api/V1/category", {
           name: this.name,
-          user_id: localStorage.getItem("usr_id"),
+          users_id: localStorage.getItem("users_id"),
         })
         .then((response) => {
           console.log(response.data);

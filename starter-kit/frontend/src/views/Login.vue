@@ -236,7 +236,7 @@ export default {
             },
           });
           localStorage.setItem('token', response.data.access_token);
-          localStorage.setItem('user_id', response.data.user.id);
+          localStorage.setItem('users_id', response.data.user.id);
           this.$router.push('/')
         })
         .catch((error) => {
