@@ -1,7 +1,9 @@
 <template>
   <section>
     <div class="d-flex justify-content-end">
-      <a  class="btn btn-primary my-2">Add New</a>
+      <a class="btn btn-primary my-2" :to="{ name: 'category-add' }">
+        <span>Add Category</span>
+      </a>
     </div>
 
     <div>
@@ -17,9 +19,7 @@
               class="d-inline-block"
             />
           </div>
-          
         </b-form-group>
-        
       </div>
 
       <!-- table -->

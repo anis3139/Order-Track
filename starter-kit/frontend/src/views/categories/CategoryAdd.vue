@@ -1,25 +1,25 @@
 <template>
   <!-- form -->
   <validation-observer ref="simpleRules">
-    <b-form>
+    <b-form @submit.prevent="categoryAdd">
       <b-row>
         <b-col md="6" offset-md="3">
           <b-form-group>
             <validation-provider
               #default="{ errors }"
-              name="First Name"
+              name="name"
               rules="required"
             >
               <b-form-input
                 v-model="name"
-                :state="errors.length > 0 ? false:null"
+                :state="errors.length > 0 ? false : null"
                 placeholder="Category Name"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
-       
+          
         <b-col md="6" offset-md="3">
           <b-button
             variant="primary"
@@ -35,12 +35,18 @@
 </template>
 
 <script>
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import { ValidationProvider, ValidationObserver } from "vee-validate";
 import {
-  BFormInput, BFormGroup, BForm, BRow, BCol, BButton, BCardText,
-} from 'bootstrap-vue'
-import { required, email } from '@validations'
-
+  BFormInput,
+  BFormGroup,
+  BForm,
+  BRow,
+  BCol,
+  BButton,
+  BCardText,
+} from "bootstrap-vue";
+import { required, email } from "@validations";
+import axios from "axios";
 export default {
   components: {
     ValidationProvider,
@@ -55,20 +61,50 @@ export default {
   },
   data() {
     return {
-      name: '',
+      name: "",
+      user_id: "",
       required,
-      email,
-    }
+    };
   },
   methods: {
     validationForm() {
-      this.$refs.simpleRules.validate().then(success => {
+      this.$refs.simpleRules.validate().then((success) => {
         if (success) {
-          // eslint-disable-next-line
-          alert('form submitted!')
+            
         }
-      })
+      });
+    },
+
+    categoryAdd() {
+      alert("hello");
+      axios
+        .post("api/V1/category", {
+          name: this.name,
+          user_id: localStorage.getItem("usr_id"),
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Category Added",
+              icon: "EditIcon",
+              variant: "success",
+            },
+          });
+          this.$router.push("/category");
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Category Added Failed",
+              icon: "EditIcon",
+              variant: "warning",
+            },
+          });
+        });
     },
   },
-}
+};
 </script>

@@ -235,8 +235,8 @@ export default {
               variant: "success",
             },
           });
-          localStorage.setItem('token', response.data.access_token)
-          
+          localStorage.setItem('token', response.data.access_token);
+          localStorage.setItem('user_id', response.data.user.id);
           this.$router.push('/')
         })
         .catch((error) => {
