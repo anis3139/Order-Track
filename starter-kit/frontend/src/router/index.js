@@ -161,4 +161,20 @@ router.afterEach(() => {
   }
 })
 
+
+router.beforeEach((to, from, next) => {
+  let isAuthenticated= '';
+  let authUser=localStorage.getItem('token')? localStorage.getItem('token'):false;
+  if (authUser) {
+    isAuthenticated=authUser;
+  }else{
+    isAuthenticated=false;
+  }
+  if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' })
+  else if (to.name == 'login' && isAuthenticated){
+    next({name:"home"})
+  }
+  else next()
+})
+
 export default router

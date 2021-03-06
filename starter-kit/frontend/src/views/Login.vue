@@ -243,6 +243,8 @@ export default {
     validationForm() {
       this.$refs.loginValidation.validate().then(success => {
         if (success) {
+          localStorage.setItem('token', success)
+           this.$router.push('/')
           this.$toast({
             component: ToastificationContent,
             props: {
