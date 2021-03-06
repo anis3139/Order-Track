@@ -227,16 +227,19 @@ export default {
       })
         .then((response) => {
           console.log(response.data);
+          let usersname= localStorage.getItem("users_name")
            this.$toast({
             component: ToastificationContent,
+
             props: {
-              title: "Login Success",
+              title: "Welcome to Mr. "+usersname,
               icon: "EditIcon",
               variant: "success",
             },
           });
           localStorage.setItem('token', response.data.access_token);
           localStorage.setItem('users_id', response.data.user.id);
+          localStorage.setItem('users_name', response.data.user.name);
           this.$router.push('/')
         })
         .catch((error) => {

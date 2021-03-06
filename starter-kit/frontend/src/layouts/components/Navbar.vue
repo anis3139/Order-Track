@@ -30,7 +30,7 @@
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
             <p class="user-name font-weight-bolder mb-0">
-              John Doe
+              {{user_name}}
             </p>
             <span class="user-status">Admin</span>
           </div>
@@ -82,13 +82,13 @@
 
         <b-dropdown-divider />
 
-        <b-dropdown-item link-class="d-flex align-items-center">
+        <b-dropdown-item link-class="d-flex align-items-center"  @click.prevent="userLogout()">
           <feather-icon
             size="16"
             icon="LogOutIcon"
             class="mr-50"
           />
-          <span><a href="" @click.prevent="userLogout()">Logout</a></span>
+          <span>Logout</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
@@ -123,6 +123,11 @@ export default {
     userLogout(){
       localStorage.removeItem("token")
       this.$router.push('/login')
+    }
+  },
+  data(){
+    return {
+      user_name:localStorage.getItem("users_name")
     }
   }
 }
