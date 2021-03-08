@@ -10,6 +10,10 @@ use App\Http\Controllers\Api\CourierCompanyNameController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\VendorController;
 
+use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\PermissionController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,6 +39,11 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']); 
+
+    Route::apiResource('role', RoleController::class);
+    Route::apiResource('user', UserController::class);
+    Route::get('user-reset/{id}', [UserController::class, 'reset'])->name('user-reset');
+    Route::apiResource('permission', PermissionController::class);
 
 });
 
