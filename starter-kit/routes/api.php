@@ -55,6 +55,8 @@ Route::group([
 
 ], function ($router) {
     Route::apiResource('category', CateogoryController::class); 
+    Route::post('update-category/{id}', [CateogoryController::class,'update']);
+
     Route::apiResource('brand', BrandController::class); 
     Route::apiResource('courier-company-name', CourierCompanyNameController::class);
     Route::apiResource('product', ProductController::class);

@@ -12,4 +12,6 @@ class Cateogory extends Model
         'name',
         'users_id',
     ];
+
+
 }

@@ -1,31 +1,28 @@
 <template>
   <!-- form -->
   <validation-observer ref="simpleRules">
-    <b-form>
+    <b-form @submit.prevent="categoryUpdate" enctype="multipart/form-data">
       <b-row>
         <b-col md="6" offset-md="3">
           <b-form-group>
             <validation-provider
               #default="{ errors }"
-              name="First Name"
+              name="name"
               rules="required"
             >
               <b-form-input
                 v-model="name"
-                :state="errors.length > 0 ? false:null"
+                :state="errors.length > 0 ? false : null"
                 placeholder="Category Name"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
-       
+
+        
         <b-col md="6" offset-md="3">
-          <b-button
-            variant="primary"
-            type="submit"
-            @click.prevent="validationForm"
-          >
+          <b-button variant="primary" type="submit" @click="validationForm">
             Submit
           </b-button>
         </b-col>
@@ -35,11 +32,21 @@
 </template>
 
 <script>
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import { ValidationProvider, ValidationObserver } from "vee-validate";
 import {
-  BFormInput, BFormGroup, BForm, BRow, BCol, BButton, BCardText,
-} from 'bootstrap-vue'
-import { required, email } from '@validations'
+  BFormInput,
+  BFormGroup,
+  BForm,
+  BRow,
+  BCol,
+  BButton,
+  BCardText,
+  BFormFile,
+  BFormSelect,
+} from "bootstrap-vue";
+import { required, email } from "@validations";
+
+import ToastificationContent from "@core/components/toastification/ToastificationContent";
 
 export default {
   components: {
@@ -52,23 +59,77 @@ export default {
     BRow,
     BCol,
     BButton,
+    BFormFile,
+    BFormSelect,
   },
   data() {
-    return {
-      name: '',
+    return { 
+      name: "",
       required,
-      email,
-    }
+
+    };
   },
+  mounted() {
+    this.getData();
+  },
+
   methods: {
+  
     validationForm() {
-      this.$refs.simpleRules.validate().then(success => {
+      this.$refs.simpleRules.validate().then((success) => {
         if (success) {
-          // eslint-disable-next-line
-          alert('form submitted!')
         }
-      })
+      });
+    },
+    getData() {
+      this.$http
+        .get(`V1/category/${this.$route.params.id}`)
+        .then((res) => {
+          this.name = res.data.category.name;
+
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Something Wrong",
+              icon: "EditIcon",
+              variant: "error",
+            },
+          });
+        });
+    },
+
+    categoryUpdate() {
+
+      const formData = new FormData();
+      formData.append("name", this.name);
+      this.$http
+        .post(`V1/update-category/${this.$route.params.id}`, formData)
+        .then((response) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Category Updated",
+              icon: "EditIcon",
+              variant: "success",
+            },
+          });
+           this.$router.push("/category");
+
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Category Updated Failed",
+              icon: "EditIcon",
+              variant: "warning",
+            },
+          });
+        });
     },
   },
-}
+};
 </script>

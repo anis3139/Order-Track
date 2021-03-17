@@ -18,10 +18,10 @@ class CateogoryController extends Controller
      */
     public function index()
     {
-        $CateogoryAll = Cateogory::all();
+        $CategoryAll = Cateogory::latest()->get();
         return response()->json([
-            'message' => 'Cateogory All Data',
-            'CateogoryAll' => $CateogoryAll
+            'message' => 'Category All Data',
+            'CategoryAll' => $CategoryAll
         ], 201);
     }
 
@@ -71,11 +71,8 @@ class CateogoryController extends Controller
      */
     public function show($id)
     {
-        $showCateogory = Cateogory::find($id);
-        return response()->json([
-            'message' => 'Cateogory Show successfully',
-            'CateogoryAll' => $showCateogory
-        ], 201);
+        $data['category'] = Cateogory::find($id);
+        return response()->json($data, 200);
     }
 
     /**
@@ -100,7 +97,6 @@ class CateogoryController extends Controller
     {
         $Cateogory = Cateogory::find($id);
         $Cateogory->name = $request->name;
-        $Cateogory->users_id = $request->users_id;
         $result = $Cateogory->save();
 
         if($result){

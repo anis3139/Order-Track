@@ -55,8 +55,8 @@ const router = new VueRouter({
         ],
       },
     },
-    {
-      path: '/category-edit',
+     {
+      path: '/category-edit/:id',
       name: 'category-edit',
       component: () => import('@/views/categories/CategoryEdit.vue'),
       meta: {
