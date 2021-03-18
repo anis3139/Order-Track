@@ -1,0 +1,47 @@
+
+    {
+      path: '/products',
+      name: 'products',
+      component: () => import('@/views/products/ProductsList.vue'),
+      meta: {
+        pageTitle: 'Products',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Products List',
+            active: true,
+          },
+        ],
+      },
+    }, 
+    {
+      path: '/product-add',
+      name: 'product-add',
+      component: () => import('@/views/products/ProductsAdd.vue'),
+      meta: {
+        pageTitle: 'Product Add',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Product Add',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/product-edit',
+      name: 'product-edit',
+      component: () => import('@/views/products/ProductsEdit.vue'),
+      meta: {
+        pageTitle: 'Product Edit',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Product Edit',
+            active: true,
+          },
+        ],
+      },
+    },
+

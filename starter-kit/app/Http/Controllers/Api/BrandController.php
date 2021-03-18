@@ -70,11 +70,8 @@ class BrandController extends Controller
      */
     public function show($id)
     {
-        $showBrand = Brand::find($id);
-        return response()->json([
-            'message' => 'Brand Show successfully',
-            'showBrand' => $showBrand
-        ], 201);
+        $data['brand'] = Brand::find($id);
+        return response()->json($data, 200);
     }
 
     /**
@@ -99,7 +96,6 @@ class BrandController extends Controller
     {
         $Brand = Brand::find($id);
         $Brand->name = $request->name;
-        $Brand->users_id = $request->users_id;
         $result = $Brand->save();
 
         if($result){

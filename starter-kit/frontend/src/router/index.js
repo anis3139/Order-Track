@@ -71,6 +71,104 @@ const router = new VueRouter({
       },
     },
 
+
+    
+    {
+      path: '/brand',
+      name: 'brand',
+      component: () => import('@/views/brand/BrandList.vue'),
+      meta: {
+        pageTitle: 'Brand',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Brand List',
+            active: true,
+          },
+        ],
+      },
+    }, 
+    {
+      path: '/brand-add',
+      name: 'brand-add',
+      component: () => import('@/views/brand/BrandAdd.vue'),
+      meta: {
+        pageTitle: 'Brand Add',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Brand Add',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/brand-edit/:id',
+      name: 'brand-edit',
+      component: () => import('@/views/brand/BrandEdit.vue'),
+      meta: {
+        pageTitle: 'Brand Edit',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Brand Edit',
+            active: true,
+          },
+        ],
+      },
+    },
+
+
+
+    {
+      path: '/courier-company',
+      name: 'courier-company',
+      component: () => import('@/views/courierCompany/CourierCompanyList.vue'),
+      meta: {
+        pageTitle: 'Courier Company',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Courier Company List',
+            active: true,
+          },
+        ],
+      },
+    }, 
+    {
+      path: '/courier-company-add',
+      name: 'courier-company-add',
+      component: () => import('@/views/courierCompany/CourierCompanyAdd.vue'),
+      meta: {
+        pageTitle: 'Courier Company Add',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Courier Company Add',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/courier-company-edit/:id',
+      name: 'courier-company-edit',
+      component: () => import('@/views/courierCompany/CourierCompanyEdit.vue'),
+      meta: {
+        pageTitle: 'Courier Company Edit',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Courier Company Edit',
+            active: true,
+          },
+        ],
+      },
+    },
+
+
+
     {
       path: '/products',
       name: 'products',
@@ -102,7 +200,7 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/product-edit',
+      path: '/product-edit/:id',
       name: 'product-edit',
       component: () => import('@/views/products/ProductsEdit.vue'),
       meta: {
@@ -116,6 +214,25 @@ const router = new VueRouter({
         ],
       },
     },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

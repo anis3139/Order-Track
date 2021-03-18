@@ -69,11 +69,8 @@ class CourierCompanyNameController extends Controller
      */
     public function show($id)
     {
-        $CourierCompanyName = CourierCompanyName::find($id);
-        return response()->json([
-            'message' => 'Show successfully',
-            'CourierCompanyName' => $CourierCompanyName
-        ], 201);
+         $data['CourierCompanyName'] = CourierCompanyName::find($id);
+        return response()->json($data, 200);
     }
 
     /**
@@ -98,7 +95,6 @@ class CourierCompanyNameController extends Controller
     {
         $CourierCompanyName = CourierCompanyName::find($id);
         $CourierCompanyName->name = $request->name;
-        $CourierCompanyName->users_id = $request->users_id;
         $result = $CourierCompanyName->save();
 
         if($result){

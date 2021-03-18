@@ -14,4 +14,14 @@ export default [
     route: 'products',
     icon: 'FileIcon',
   },
+  {
+    title: 'Brands',
+    route: 'brand',
+    icon: 'FileIcon',
+  },
+  {
+    title: 'Courier Company',
+    route: 'courier-company',
+    icon: 'FileIcon',
+  },
 ]
