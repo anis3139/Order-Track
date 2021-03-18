@@ -1,7 +1,9 @@
 <template>
   <section>
     <div class="d-flex justify-content-end">
-      <a  class="btn btn-primary my-2">Add New</a>
+      <router-link class="btn btn-primary my-2" :to="{ name: 'product-add' }">
+        <span>Add Product</span>
+      </router-link>
     </div>
 
     <div>
@@ -17,9 +19,7 @@
               class="d-inline-block"
             />
           </div>
-          
         </b-form-group>
-        
       </div>
 
       <!-- table -->
@@ -47,9 +47,12 @@
       >
         <template slot="table-row" slot-scope="props">
           <!-- Column: Name -->
-          <span v-if="props.column.field === 'fullName'" class="text-nowrap">
-            <span class="text-nowrap">{{ props.row.fullName }}</span>
+          <span v-if="props.column.field === 'name'" class="text-nowrap">
+            <span class="text-nowrap">{{ props.row.name }}</span>
           </span>
+          <!-- Column: Name -->
+          
+          
 
           <!-- Column: Status -->
           <span v-else-if="props.column.field === 'status'">
@@ -74,12 +77,21 @@
                   />
                 </template>
                 <b-dropdown-item>
-                  <feather-icon icon="Edit2Icon" class="mr-50" />
-                  <span>Edit</span>
+                  <router-link
+                    :to="{
+                      name: 'product-edit',
+                      params: { id: props.row.id },
+                    }"
+                  >
+                    <feather-icon icon="Edit2Icon" class="mr-50" />
+                    <span>Edit</span></router-link
+                  >
                 </b-dropdown-item>
                 <b-dropdown-item>
-                  <feather-icon icon="TrashIcon" class="mr-50" />
-                  <span>Delete</span>
+                  <a href="" @click.prevent="deleteData(props.row.id)">
+                    <feather-icon icon="TrashIcon" class="mr-50" />
+                    <span> Delete </span>
+                  </a>
                 </b-dropdown-item>
               </b-dropdown>
             </span>
@@ -148,7 +160,8 @@ import {
 import { VueGoodTable } from "vue-good-table";
 import "vue-good-table/dist/vue-good-table.css";
 import store from "@/store/index";
-
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import axios from "axios";
 export default {
   components: {
     VueGoodTable,
@@ -168,40 +181,14 @@ export default {
       columns: [
         {
           label: "Name",
-          field: "fullName",
+          field: "name",
         },
-
         {
           label: "Action",
           field: "action",
         },
       ],
-      rows: [
-        {
-          fullName: "Anis",
-        },
-        {
-          fullName: "Anis",
-        },
-        {
-          fullName: "fgfgfg",
-        },
-        {
-          fullName: "fggfgf",
-        },
-        {
-          fullName: "gffg",
-        },
-        {
-          fullName: "Anis",
-        },
-        {
-          fullName: "Anis",
-        },
-        {
-          fullName: "Anis",
-        },
-      ],
+      rows: [],
       searchTerm: "",
       status: [
         {
@@ -232,7 +219,6 @@ export default {
         Applied: "light-info",
         /* eslint-enable key-spacing */
       };
-
       return (status) => statusColor[status];
     },
     direction() {
@@ -247,9 +233,71 @@ export default {
     },
   },
   created() {
-    this.$http.get("/good-table/basic").then((res) => {
-      this.rows = res.data;
-    });
+    this.productData();
+  },
+  methods: {
+    productData() {
+      this.$http.get("V1/product").then((res) => {
+       
+        const rows = [];
+        res.data.CategoryAll.forEach((element, i) => {
+          rows.push({
+            id: element.id,
+            name: element.name,
+            arabic_name: element.arabic_name,
+            parent: element.parent ? element.parent.name : "",
+            commision: element.commision,
+            image: `<img src="${element.image}" alt=""/>`
+          });
+        });
+
+        this.rows = rows;
+
+      }).catch((error)=>{
+        console.log(error);
+      });
+    },
+    deleteData(id) {
+      // eslint-disable-next-line no-undef
+      this.$bvModal
+        .msgBoxConfirm("Please confirm that you want to delete everything.", {
+          title: "Please Confirm",
+          size: "sm",
+          okVariant: "primary",
+          okTitle: "Yes",
+          cancelTitle: "No",
+          cancelVariant: "outline-secondary",
+          hideHeaderClose: false,
+          centered: true,
+        })
+        .then((value) => {
+          if (value) {
+            this.$http
+              .delete(`V1/product/${id}`)
+              .then((res) => {
+                this.productData();
+                this.$toast({
+                  component: ToastificationContent,
+                  props: {
+                    title: "Product Deleted",
+                    icon: "EditIcon",
+                    variant: "success",
+                  },
+                });
+              })
+              .catch((error) => {
+                this.$toast({
+                  component: ToastificationContent,
+                  props: {
+                    title: "Something Wrong",
+                    icon: "EditIcon",
+                    variant: "eror",
+                  },
+                });
+              });
+          }
+        });
+    },
   },
 };
 </script>

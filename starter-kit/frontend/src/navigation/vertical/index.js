@@ -11,7 +11,7 @@ export default [
   },
   {
     title: 'Products',
-    route: 'products',
+    route: 'product',
     icon: 'FileIcon',
   },
   {

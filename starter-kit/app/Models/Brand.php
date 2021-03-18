@@ -12,4 +12,9 @@ class Brand extends Model
         'name',
         'users_id',
     ];
+
+
+    public function brand() {
+        return $this->belongsTo(Product::class);
+    }
 }

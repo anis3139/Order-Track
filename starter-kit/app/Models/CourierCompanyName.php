@@ -12,4 +12,6 @@ class CourierCompanyName extends Model
         'name',
         'users_id',
     ];
+
+    
 }
