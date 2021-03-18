@@ -15,4 +15,16 @@ class Product extends Model
         'categorie_id',
         'vendor_id',
     ];
+
+    public function category() {
+         return $this->hasMany(Category::class, 'id', 'category_id');
+    }
+
+    public function vendor() {
+         return $this->hasMany(Vendor::class, 'id', 'vendor_id');
+    }
+    public function brand() {
+         return $this->hasMany(Vendor::class, 'id', 'brand_id');
+    }
+   
 }

@@ -184,6 +184,18 @@ export default {
           field: "name",
         },
         {
+          label: "Category",
+          field: "category",
+        },
+        {
+          label: "Brand",
+          field: "brand",
+        },
+        {
+          label: "Vendor",
+          field: "vendor",
+        },
+        {
           label: "Action",
           field: "action",
         },
@@ -244,10 +256,11 @@ export default {
           rows.push({
             id: element.id,
             name: element.name,
-            arabic_name: element.arabic_name,
-            parent: element.parent ? element.parent.name : "",
-            commision: element.commision,
-            image: `<img src="${element.image}" alt=""/>`
+            brand: element.brand,
+            category: element.category ? element.category.name : "",
+            vendor: element.vendor ? element.vendor.name : "",
+         
+            
           });
         });
 
