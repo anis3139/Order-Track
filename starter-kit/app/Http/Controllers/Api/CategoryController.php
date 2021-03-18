@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Cateogory;
+use App\Models\Category;
 use Validator;
 
-class CateogoryController extends Controller
+class CategoryController extends Controller
 {
     
      /**
@@ -18,7 +18,7 @@ class CateogoryController extends Controller
      */
     public function index()
     {
-        $CategoryAll = Cateogory::latest()->get();
+        $CategoryAll = Category::latest()->get();
         return response()->json([
             'message' => 'Category All Data',
             'CategoryAll' => $CategoryAll
@@ -51,15 +51,15 @@ class CateogoryController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
-        $Cateogory = Cateogory::create(array_merge(
+        $Category = Category::create(array_merge(
                     $validator->validated(),
                     ['name' => $request->name],
                     ['users_id' => $request->users_id]
                 ));
 
         return response()->json([
-            'message' => 'Cateogory successfully Store',
-            'Cateogory' => $Cateogory
+            'message' => 'Category successfully Store',
+            'Category' => $Category
         ], 201);
     }
 
@@ -71,7 +71,7 @@ class CateogoryController extends Controller
      */
     public function show($id)
     {
-        $data['category'] = Cateogory::find($id);
+        $data['category'] = Category::find($id);
         return response()->json($data, 200);
     }
 
@@ -95,18 +95,18 @@ class CateogoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Cateogory = Cateogory::find($id);
-        $Cateogory->name = $request->name;
-        $result = $Cateogory->save();
+        $Category = Category::find($id);
+        $Category->name = $request->name;
+        $result = $Category->save();
 
         if($result){
             return response()->json([
-                'message' => 'Cateogory successfully Update',
-                'Cateogory' => $Cateogory
+                'message' => 'Category successfully Update',
+                'Category' => $Category
             ], 201);
         }else{
             return response()->json([
-                'message' => 'Cateogory Not successfully Update',
+                'message' => 'Category Not successfully Update',
             ], 400);
         }
                   
@@ -122,17 +122,17 @@ class CateogoryController extends Controller
      */
     public function destroy($id)
     {
-        $Cateogory = Cateogory::find($id);
+        $Category = Category::find($id);
         
-        $result = $Cateogory->delete();
+        $result = $Category->delete();
 
         if($result){
             return response()->json([
-                'message' => 'Cateogory successfully Delete',
+                'message' => 'Category successfully Delete',
             ], 201);
         }else{
             return response()->json([
-                'message' => 'Cateogory Not successfully Delete',
+                'message' => 'Category Not successfully Delete',
             ], 400);
         }
     }

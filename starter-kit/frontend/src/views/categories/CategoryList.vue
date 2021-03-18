@@ -2,7 +2,7 @@
   <section>
     <div class="d-flex justify-content-end">
       <router-link class="btn btn-primary my-2" :to="{ name: 'category-add' }">
-        <span>Add Cateogory</span>
+        <span>Add Category</span>
       </router-link>
     </div>
 
@@ -276,7 +276,7 @@ export default {
                 this.$toast({
                   component: ToastificationContent,
                   props: {
-                    title: "Cateogory Deleted",
+                    title: "Category Deleted",
                     icon: "EditIcon",
                     variant: "success",
                   },

@@ -57,7 +57,7 @@ class ProductController extends Controller
                     ['name' => $request->name],
                     ['users_id' => $request->users_id],
                     ['brand_id' => $request->brand_id],
-                    ['cateogorie_id' => $request->cateogorie_id], 
+                    ['categorie_id' => $request->categorie_id], 
                     ['vendor_id' => $request->vendor_id],
                 ));
 
@@ -102,7 +102,7 @@ class ProductController extends Controller
         $Product = Product::find($id);
         $Product->name = $request->name;
         $Product->brand_id = $request->brand_id;
-        $Product->cateogorie_id = $request->cateogorie_id;
+        $Product->categorie_id = $request->categorie_id;
         $Product->vendor_id = $request->vendor_id;
         $result = $Product->save();
 

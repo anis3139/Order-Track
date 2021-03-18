@@ -12,7 +12,7 @@ class Product extends Model
         'name',
         'users_id',
         'brand_id',
-        'cateogorie_id',
+        'categorie_id',
         'vendor_id',
     ];
 }

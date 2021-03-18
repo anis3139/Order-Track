@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Api\CateogoryController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CourierCompanyNameController;
 use App\Http\Controllers\Api\ProductController;
@@ -54,8 +54,8 @@ Route::group([
    // 'namespace' => 'Api\V1'
 
 ], function ($router) {
-    Route::apiResource('category', CateogoryController::class); 
-    Route::post('update-category/{id}', [CateogoryController::class,'update']);
+    Route::apiResource('category', CategoryController::class); 
+    Route::post('update-category/{id}', [CategoryController::class,'update']);
 
     Route::apiResource('brand', BrandController::class); 
     Route::post('update-brand/{id}', [BrandController::class,'update']);
