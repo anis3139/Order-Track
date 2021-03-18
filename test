@@ -1,44 +1,44 @@
 
     {
-      path: '/products',
-      name: 'products',
-      component: () => import('@/views/products/ProductsList.vue'),
+      path: '/vendor',
+      name: 'vendor',
+      component: () => import('@/views/vendor/VendorsList.vue'),
       meta: {
-        pageTitle: 'Products',
+        pageTitle: 'Vendors',
         authOnly: true,
         breadcrumb: [
           {
-            text: 'Products List',
+            text: 'Vendors List',
             active: true,
           },
         ],
       },
     }, 
     {
-      path: '/product-add',
-      name: 'product-add',
-      component: () => import('@/views/products/ProductsAdd.vue'),
+      path: '/vendor-add',
+      name: 'vendor-add',
+      component: () => import('@/views/vendor/VendorsAdd.vue'),
       meta: {
-        pageTitle: 'Product Add',
+        pageTitle: 'Vendor Add',
         authOnly: true,
         breadcrumb: [
           {
-            text: 'Product Add',
+            text: 'Vendor Add',
             active: true,
           },
         ],
       },
     },
     {
-      path: '/product-edit',
-      name: 'product-edit',
-      component: () => import('@/views/products/ProductsEdit.vue'),
+      path: '/vendor-edit/:id',
+      name: 'vendor-edit',
+      component: () => import('@/views/vendor/VendorsEdit.vue'),
       meta: {
-        pageTitle: 'Product Edit',
+        pageTitle: 'Vendor Edit',
         authOnly: true,
         breadcrumb: [
           {
-            text: 'Product Edit',
+            text: 'Vendor Edit',
             active: true,
           },
         ],

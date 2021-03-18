@@ -58,14 +58,16 @@ Route::group([
     Route::post('update-category/{id}', [CateogoryController::class,'update']);
 
     Route::apiResource('brand', BrandController::class); 
-        Route::post('update-brand/{id}', [BrandController::class,'update']);
+    Route::post('update-brand/{id}', [BrandController::class,'update']);
 
 
     Route::apiResource('courier-company-name', CourierCompanyNameController::class);
-      Route::post('update-courier-company-name/{id}', [CourierCompanyNameController::class,'update']);
+    Route::post('update-courier-company-name/{id}', [CourierCompanyNameController::class,'update']);
 
 
-    Route::apiResource('product', ProductController::class);
     Route::apiResource('vendor', VendorController::class);
+    Route::post('update-vendor/{id}', [VendorController::class,'update']);
+    Route::apiResource('product', ProductController::class);
+    Route::post('update-product/{id}', [VendorController::class,'update']);
 
 });

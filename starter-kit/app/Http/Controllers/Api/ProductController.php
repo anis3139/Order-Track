@@ -75,11 +75,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $Product = Product::find($id);
-        return response()->json([
-            'message' => 'Show successfully',
-            'Product' => $Product
-        ], 201);
+         $data['product'] = Product::find($id);
+        return response()->json($data, 200);
     }
 
     /**
@@ -104,7 +101,6 @@ class ProductController extends Controller
     {
         $Product = Product::find($id);
         $Product->name = $request->name;
-        $Product->users_id = $request->users_id;
         $Product->brand_id = $request->brand_id;
         $Product->cateogorie_id = $request->cateogorie_id;
         $Product->vendor_id = $request->vendor_id;

@@ -24,4 +24,9 @@ export default [
     route: 'courier-company',
     icon: 'FileIcon',
   },
+  {
+    title: 'Vendor',
+    route: 'vendor',
+    icon: 'FileIcon',
+  },
 ]

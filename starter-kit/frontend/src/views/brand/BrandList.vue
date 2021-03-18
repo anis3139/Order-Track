@@ -233,10 +233,10 @@ export default {
     },
   },
   created() {
-    this.categoryData();
+    this.brandData();
   },
   methods: {
-    categoryData() {
+    brandData() {
       this.$http.get("V1/brand").then((res) => {
         // alert("hello")
         const rows = [];
@@ -272,7 +272,7 @@ export default {
             this.$http
               .delete(`V1/brand/${id}`)
               .then((res) => {
-                this.categoryData();
+                this.brandData();
                 this.$toast({
                   component: ToastificationContent,
                   props: {

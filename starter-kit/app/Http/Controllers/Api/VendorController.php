@@ -71,11 +71,8 @@ class VendorController extends Controller
      */
     public function show($id)
     {
-        $Vendor = Vendor::find($id);
-        return response()->json([
-            'message' => 'Show successfully',
-            'Vendor' => $Vendor
-        ], 201);
+        $data['vendor'] = Vendor::find($id);
+        return response()->json($data, 200);
     }
 
     /**
@@ -100,7 +97,6 @@ class VendorController extends Controller
     {
         $Vendor = Vendor::find($id);
         $Vendor->name = $request->name;
-        $Vendor->users_id = $request->users_id;
         $result = $Vendor->save();
 
         if($result){

@@ -168,17 +168,66 @@ const router = new VueRouter({
     },
 
 
-
     {
-      path: '/products',
-      name: 'products',
-      component: () => import('@/views/products/ProductsList.vue'),
+      path: '/vendor',
+      name: 'vendor',
+      component: () => import('@/views/vendor/VendorList.vue'),
       meta: {
-        pageTitle: 'Products',
+        pageTitle: 'Vendor',
         authOnly: true,
         breadcrumb: [
           {
-            text: 'Products List',
+            text: 'Vendor List',
+            active: true,
+          },
+        ],
+      },
+    }, 
+    {
+      path: '/vendor-add',
+      name: 'vendor-add',
+      component: () => import('@/views/vendor/VendorAdd.vue'),
+      meta: {
+        pageTitle: 'Vendor Add',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Vendor Add',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/vendor-edit/:id',
+      name: 'vendor-edit',
+      component: () => import('@/views/vendor/VendorEdit.vue'),
+      meta: {
+        pageTitle: 'Vendor Edit',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Vendor Edit',
+            active: true,
+          },
+        ],
+      },
+    },
+
+
+
+
+
+    {
+      path: '/product',
+      name: 'product',
+      component: () => import('@/views/product/ProductList.vue'),
+      meta: {
+        pageTitle: 'Product',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Product List',
             active: true,
           },
         ],
@@ -187,7 +236,7 @@ const router = new VueRouter({
     {
       path: '/product-add',
       name: 'product-add',
-      component: () => import('@/views/products/ProductsAdd.vue'),
+      component: () => import('@/views/product/ProductAdd.vue'),
       meta: {
         pageTitle: 'Product Add',
         authOnly: true,
@@ -202,7 +251,7 @@ const router = new VueRouter({
     {
       path: '/product-edit/:id',
       name: 'product-edit',
-      component: () => import('@/views/products/ProductsEdit.vue'),
+      component: () => import('@/views/product/ProductEdit.vue'),
       meta: {
         pageTitle: 'Product Edit',
         authOnly: true,

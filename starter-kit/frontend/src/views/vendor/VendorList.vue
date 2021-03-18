@@ -1,10 +1,11 @@
 <template>
   <section>
     <div class="d-flex justify-content-end">
-      <router-link class="btn btn-primary my-2" :to="{ name: 'courier-company-add' }">
-        <span>Add Courier Company</span>
+      <router-link class="btn btn-primary my-2" :to="{ name: 'vendor-add' }">
+        <span>Add Vendor</span>
       </router-link>
     </div>
+
 
     <div>
       <!-- search input -->
@@ -79,7 +80,7 @@
                 <b-dropdown-item>
                   <router-link
                     :to="{
-                      name: 'courier-company-edit',
+                      name: 'vendor-edit',
                       params: { id: props.row.id },
                     }"
                   >
@@ -233,14 +234,14 @@ export default {
     },
   },
   created() {
-    this.coriurCompanyData();
+    this.vendorData();
   },
   methods: {
-    coriurCompanyData() {
-      this.$http.get("V1/courier-company-name").then((res) => {
+    vendorData() {
+      this.$http.get("V1/vendor").then((res) => {
        
         const rows = [];
-        res.data.CourierCompanyName.forEach((element, i) => {
+        res.data.Vendor.forEach((element, i) => {
           rows.push({
             id: element.id,
             name: element.name,
@@ -270,13 +271,13 @@ export default {
         .then((value) => {
           if (value) {
             this.$http
-              .delete(`V1/courier-company-name/${id}`)
+              .delete(`V1/vendor/${id}`)
               .then((res) => {
-                this.coriurCompanyData();
+                this.vendorData();
                 this.$toast({
                   component: ToastificationContent,
                   props: {
-                    title: "Courier Company Deleted",
+                    title: "Vendor Deleted",
                     icon: "EditIcon",
                     variant: "success",
                   },
