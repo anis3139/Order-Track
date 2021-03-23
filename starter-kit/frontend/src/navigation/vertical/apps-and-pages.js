@@ -8,15 +8,15 @@ export default [
         children: [
             {
                 title: "Manage Roll",
-                route: ""
+                route: "role"
             },
             {
                 title: "Manage User",
-                route: ""
+                route: "user"
             },
             {
-                title: "Assign Permision",
-                route: ""
+                title: "Assign Permission",
+                route: "permission"
             }
         ]
     },
@@ -63,26 +63,10 @@ export default [
         children: [
 
             {
-                title: ' New Orders',
-                route: '',
+                title: ' Orders',
+                route: 'order',
 
             },
-            {
-                title: 'Proccessing Orders',
-                route: '',
-
-            },
-            {
-                title: ' Complete Orders',
-                route: '',
-
-            },
-            {
-                title: ' Cancel Orders',
-                route: '',
-
-
-            }
         ]
     },
 

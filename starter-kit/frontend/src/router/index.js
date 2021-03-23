@@ -265,6 +265,197 @@ const router = new VueRouter({
     },
 
 
+ {
+      path: '/role',
+      name: 'role',
+      component: () => import('@/views/role/RoleList.vue'),
+      meta: {
+        pageTitle: 'Role',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Role List',
+            active: true,
+          },
+        ],
+      },
+    }, 
+    {
+      path: '/role-add',
+      name: 'role-add',
+      component: () => import('@/views/role/RoleAdd.vue'),
+      meta: {
+        pageTitle: 'Role Add',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Role Add',
+            active: true,
+          },
+        ],
+      },
+    },
+
+    {
+      path: '/role-edit/:id',
+      name: 'role-edit',
+      component: () => import('@/views/role/RoleEdit.vue'),
+      meta: {
+        pageTitle: 'Role Edit',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Role Edit',
+            active: true,
+          },
+        ],
+      },
+    },
+
+
+
+
+
+    {
+      path: '/user',
+      name: 'user',
+      component: () => import('@/views/user/UserList.vue'),
+      meta: {
+        pageTitle: 'User',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'User List',
+            active: true,
+          },
+        ],
+      },
+    }, 
+    {
+      path: '/user-add',
+      name: 'user-add',
+      component: () => import('@/views/user/UserAdd.vue'),
+      meta: {
+        pageTitle: 'User Add',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'User Add',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/user-edit/:id',
+      name: 'user-edit',
+      component: () => import('@/views/user/UserEdit.vue'),
+      meta: {
+        pageTitle: 'User Edit',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'User Edit',
+            active: true,
+          },
+        ],
+      },
+    },
+
+
+
+    {
+      path: '/permission',
+      name: 'permission',
+      component: () => import('@/views/permission/PermissionList.vue'),
+      meta: {
+        pageTitle: 'Permission',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Permission List',
+            active: true,
+          },
+        ],
+      },
+    }, 
+    {
+      path: '/permission-add',
+      name: 'permission-add',
+      component: () => import('@/views/permission/PermissionAdd.vue'),
+      meta: {
+        pageTitle: 'Permission Add',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Permission Add',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/permission-edit/:id',
+      name: 'permission-edit',
+      component: () => import('@/views/permission/PermissionEdit.vue'),
+      meta: {
+        pageTitle: 'Permission Edit',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Permission Edit',
+            active: true,
+          },
+        ],
+      },
+    },
+
+
+{
+      path: '/order',
+      name: 'order',
+      component: () => import('@/views/order/OrderList.vue'),
+      meta: {
+        pageTitle: 'Order',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Order List',
+            active: true,
+          },
+        ],
+      },
+    }, 
+    {
+      path: '/order-add',
+      name: 'order-add',
+      component: () => import('@/views/order/OrderAdd.vue'),
+      meta: {
+        pageTitle: 'Order Add',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Order Add',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/order-edit/:id',
+      name: 'order-edit',
+      component: () => import('@/views/order/OrderEdit.vue'),
+      meta: {
+        pageTitle: 'Order Edit',
+        authOnly: true,
+        breadcrumb: [
+          {
+            text: 'Order Edit',
+            active: true,
+          },
+        ],
+      },
+    },
 
 
 
