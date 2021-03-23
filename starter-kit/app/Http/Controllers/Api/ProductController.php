@@ -22,7 +22,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $Product = Product::with(['category','brand','vendor'])->get();
+        $userId = Auth::user()->id;
+        $Product = Product::with(['category','brand','vendor'])->where('users_id',$userId)->get();
         return response()->json([
             'message' => 'Product All Data',
             'Product' => $Product
@@ -47,8 +48,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $userId=  Auth::user()->id;
+        $validator = Validator::make($request->all(), [
 
-         $validator = Validator::make($request->all(), [
+
             'name' => 'required',
             'users_id' => 'required',
             'brand_id' => 'required',
@@ -63,7 +66,7 @@ class ProductController extends Controller
         $Product = Product::create(array_merge(
                     $validator->validated(),
                     ['name' => $request->name],
-                    ['users_id' => $request->users_id],
+                    ['users_id' => $userId],
                     ['brand_id' => $request->brand_id],
                     ['category_id' => $request->category_id], 
                     ['vendor_id' => $request->vendor_id],

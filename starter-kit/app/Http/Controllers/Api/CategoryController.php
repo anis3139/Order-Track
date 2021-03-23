@@ -18,7 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $CategoryAll = Category::latest()->get();
+        $userId=  Auth::user()->id;
+        $CategoryAll = Category::where('users_id',$userId)->latest()->get();
         return response()->json([
             'message' => 'Category All Data',
             'CategoryAll' => $CategoryAll
@@ -43,6 +44,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $userId=  Auth::user()->id;
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -54,7 +56,7 @@ class CategoryController extends Controller
         $Category = Category::create(array_merge(
                     $validator->validated(),
                     ['name' => $request->name],
-                    ['users_id' => $request->users_id]
+                    ['users_id' => $userId]
                 ));
 
         return response()->json([
