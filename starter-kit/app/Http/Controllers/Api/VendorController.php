@@ -18,7 +18,8 @@ class VendorController extends Controller
      */
     public function index()
     {
-        $Vendor = Vendor::all();
+        $userId = Auth::user()->id;
+        $Vendor = Vendor::where('users_id',$userId)->get();
         return response()->json([
             'message' => 'Vendor All Data',
             'Vendor' => $Vendor
@@ -43,6 +44,7 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
+        $userId= Auth::user()->id;
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -54,7 +56,7 @@ class VendorController extends Controller
         $Vendor = Vendor::create(array_merge(
                     $validator->validated(),
                     ['name' => $request->name],
-                    ['users_id' => $request->users_id]
+                    ['users_id' => $userId]
                 ));
 
         return response()->json([

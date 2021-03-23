@@ -16,7 +16,8 @@ class CourierCompanyNameController extends Controller
      */
     public function index()
     {
-        $CourierCompanyName = CourierCompanyName::all();
+         $userId = Auth::user()->id;
+        $CourierCompanyName = CourierCompanyName::where('users_id',$userId)->get();
         return response()->json([
             'message' => 'All Data',
             'CourierCompanyName' => $CourierCompanyName
@@ -41,6 +42,8 @@ class CourierCompanyNameController extends Controller
      */
     public function store(Request $request)
     {
+         $userId=  Auth::user()->id;
+         
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -52,7 +55,7 @@ class CourierCompanyNameController extends Controller
         $CourierCompanyName = CourierCompanyName::create(array_merge(
                     $validator->validated(),
                     ['name' => $request->name],
-                    ['users_id' => $request->users_id]
+                    ['users_id' => $userId]
                 ));
 
         return response()->json([
