@@ -1,7 +1,7 @@
 <template>
   <!-- form -->
   <validation-observer ref="simpleRules">
-    <b-form @submit.prevent="brandAdd" enctype="multipart/form-data">
+    <b-form @submit.prevent="roleAdd" enctype="multipart/form-data">
       <b-row>
         <b-col md="6" offset-md="3">
           <b-form-group>
@@ -13,7 +13,7 @@
               <b-form-input
                 v-model="name"
                 :state="errors.length > 0 ? false : null"
-                placeholder="Brand Name"
+                placeholder="Role Name"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
@@ -84,14 +84,14 @@ export default {
       });
     },
 
-    brandAdd() {
+    roleAdd() {
       var formData = new FormData();
       formData.append("name", this.name);
       formData.append("users_id", localStorage.getItem("users_id"));
   
 
       axios.post(
-          "api/V1/brand", formData
+          "api/auth/role", formData
 
         )
         .then((response) => {
@@ -99,18 +99,18 @@ export default {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: "Brand Added",
+              title: "Role Added",
               icon: "EditIcon",
               variant: "success",
             },
           });
-          this.$router.push("/brand");
+          this.$router.push("/role");
         })
         .catch((error) => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: "Brand Added Failed",
+              title: "Role Added Failed",
               icon: "EditIcon",
               variant: "warning",
             },

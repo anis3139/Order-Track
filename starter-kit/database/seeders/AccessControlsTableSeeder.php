@@ -45,45 +45,45 @@ class AccessControlsTableSeeder extends Seeder
 
         //data for roles table
         $data = [
-            ['name' => 'Super Admin', 'guard_name' => 'web'],
-            ['name' => 'Admin', 'guard_name' => 'web'],
-            ['name' => 'Guest', 'guard_name' => 'web'],
+            ['name' => 'Super Admin', 'guard_name' => 'api'],
+            ['name' => 'Admin', 'guard_name' => 'api'],
+            ['name' => 'Guest', 'guard_name' => 'api'],
         ];
         \DB::table('roles')->insert($data);
 
         //data for permissions table
         $data = [
-            ['name' => 'dashboard', 'guard_name' => 'web'],
+            ['name' => 'dashboard', 'guard_name' => 'api'],
 
-            ['name' => 'category-list', 'guard_name' => 'web'],
-            ['name' => 'category-create', 'guard_name' => 'web'],
-            ['name' => 'category-show', 'guard_name' => 'web'],
-            ['name' => 'category-edit', 'guard_name' => 'web'],
-            ['name' => 'category-delete', 'guard_name' => 'web'],
+            ['name' => 'category-list', 'guard_name' => 'api'],
+            ['name' => 'category-create', 'guard_name' => 'api'],
+            ['name' => 'category-show', 'guard_name' => 'api'],
+            ['name' => 'category-edit', 'guard_name' => 'api'],
+            ['name' => 'category-delete', 'guard_name' => 'api'],
 
-            ['name' => 'brand-list', 'guard_name' => 'web'],
-            ['name' => 'brand-create', 'guard_name' => 'web'],
-            ['name' => 'brand-show', 'guard_name' => 'web'],
-            ['name' => 'brand-edit', 'guard_name' => 'web'],
-            ['name' => 'brand-delete', 'guard_name' => 'web'],
+            ['name' => 'brand-list', 'guard_name' => 'api'],
+            ['name' => 'brand-create', 'guard_name' => 'api'],
+            ['name' => 'brand-show', 'guard_name' => 'api'],
+            ['name' => 'brand-edit', 'guard_name' => 'api'],
+            ['name' => 'brand-delete', 'guard_name' => 'api'],
 
-            ['name' => 'courier-company-list', 'guard_name' => 'web'],
-            ['name' => 'courier-company-create', 'guard_name' => 'web'],
-            ['name' => 'courier-company-show', 'guard_name' => 'web'],
-            ['name' => 'courier-company-edit', 'guard_name' => 'web'],
-            ['name' => 'courier-company-delete', 'guard_name' => 'web'],
+            ['name' => 'courier-company-list', 'guard_name' => 'api'],
+            ['name' => 'courier-company-create', 'guard_name' => 'api'],
+            ['name' => 'courier-company-show', 'guard_name' => 'api'],
+            ['name' => 'courier-company-edit', 'guard_name' => 'api'],
+            ['name' => 'courier-company-delete', 'guard_name' => 'api'],
 
-            ['name' => 'vendor-list', 'guard_name' => 'web'],
-            ['name' => 'vendor-create', 'guard_name' => 'web'],
-            ['name' => 'vendor-show', 'guard_name' => 'web'],
-            ['name' => 'vendor-edit', 'guard_name' => 'web'],
-            ['name' => 'vendor-delete', 'guard_name' => 'web'],
+            ['name' => 'vendor-list', 'guard_name' => 'api'],
+            ['name' => 'vendor-create', 'guard_name' => 'api'],
+            ['name' => 'vendor-show', 'guard_name' => 'api'],
+            ['name' => 'vendor-edit', 'guard_name' => 'api'],
+            ['name' => 'vendor-delete', 'guard_name' => 'api'],
 
-            ['name' => 'product-list', 'guard_name' => 'web'],
-            ['name' => 'product-create', 'guard_name' => 'web'],
-            ['name' => 'product-show', 'guard_name' => 'web'],
-            ['name' => 'product-edit', 'guard_name' => 'web'],
-            ['name' => 'product-delete', 'guard_name' => 'web'],
+            ['name' => 'product-list', 'guard_name' => 'api'],
+            ['name' => 'product-create', 'guard_name' => 'api'],
+            ['name' => 'product-show', 'guard_name' => 'api'],
+            ['name' => 'product-edit', 'guard_name' => 'api'],
+            ['name' => 'product-delete', 'guard_name' => 'api'],
 
 
         ];

@@ -1,8 +1,8 @@
 <template>
   <section>
     <div class="d-flex justify-content-end">
-      <router-link class="btn btn-primary my-2" :to="{ name: 'brand-add' }">
-        <span>Add Brand</span>
+      <router-link class="btn btn-primary my-2" :to="{ name: 'role-add' }">
+        <span>Add Role</span>
       </router-link>
     </div>
 
@@ -79,7 +79,7 @@
                 <b-dropdown-item>
                   <router-link
                     :to="{
-                      name: 'brand-edit',
+                      name: 'role-edit',
                       params: { id: props.row.id },
                     }"
                   >
@@ -233,14 +233,14 @@ export default {
     },
   },
   created() {
-    this.brandData();
+    this.roleData();
   },
   methods: {
-    brandData() {
-      this.$http.get("V1/brand").then((res) => {
+    roleData() {
+      this.$http.get("V1/role").then((res) => {
         // alert("hello")
         const rows = [];
-        res.data.allBrand.forEach((element, i) => {
+        res.data.allRole.forEach((element, i) => {
           rows.push({
             id: element.id,
             name: element.name,
@@ -270,13 +270,13 @@ export default {
         .then((value) => {
           if (value) {
             this.$http
-              .delete(`V1/brand/${id}`)
+              .delete(`V1/role/${id}`)
               .then((res) => {
-                this.brandData();
+                this.roleData();
                 this.$toast({
                   component: ToastificationContent,
                   props: {
-                    title: "Brand Deleted",
+                    title: "Role Deleted",
                     icon: "EditIcon",
                     variant: "success",
                   },
