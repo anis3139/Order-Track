@@ -12,7 +12,7 @@ class Product extends Model
         'name',
         'users_id',
         'brand_id',
-        'categorie_id',
+        'category_id',
         'vendor_id',
     ];
 
@@ -24,7 +24,7 @@ class Product extends Model
          return $this->hasMany(Vendor::class, 'id', 'vendor_id');
     }
     public function brand() {
-         return $this->hasMany(Vendor::class, 'id', 'brand_id');
+         return $this->hasMany(Brand::class, 'id', 'brand_id');
     }
    
 }

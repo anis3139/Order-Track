@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use App\Models\Vendor;
 use Validator;
 
 class ProductController extends Controller
@@ -44,8 +47,13 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+
+         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'users_id' => 'required',
+            'brand_id' => 'required',
+            'category_id' => 'required',
+            'vendor_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -57,7 +65,7 @@ class ProductController extends Controller
                     ['name' => $request->name],
                     ['users_id' => $request->users_id],
                     ['brand_id' => $request->brand_id],
-                    ['categorie_id' => $request->categorie_id], 
+                    ['category_id' => $request->category_id], 
                     ['vendor_id' => $request->vendor_id],
                 ));
 
@@ -75,7 +83,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-         $data['product'] = Product::find($id);
+        $data['product'] = Product::find($id);
+        $data['categories'] = Category::all();
+        $data['brand'] = Brand::all();
+        $data['vendor'] = Vendor::all();
         return response()->json($data, 200);
     }
 
@@ -102,7 +113,7 @@ class ProductController extends Controller
         $Product = Product::find($id);
         $Product->name = $request->name;
         $Product->brand_id = $request->brand_id;
-        $Product->categorie_id = $request->categorie_id;
+        $Product->category_id = $request->category_id;
         $Product->vendor_id = $request->vendor_id;
         $result = $Product->save();
 
