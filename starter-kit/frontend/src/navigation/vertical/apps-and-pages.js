@@ -7,11 +7,15 @@ export default [
         icon: "UserIcon",
         children: [
             {
-                title: "Admin",
+                title: "Manage Roll",
                 route: ""
             },
             {
-                title: "User",
+                title: "Manage User",
+                route: ""
+            },
+            {
+                title: "Assign Permision",
                 route: ""
             }
         ]
@@ -30,22 +34,22 @@ export default [
             {
                 title: 'Category',
                 route: 'category',
-                icon: 'FileIcon',
+               
             },
             {
                 title: 'Products',
                 route: 'product',
-                icon: 'FileIcon',
+                
             },
             {
                 title: 'Brands',
                 route: 'brand',
-                icon: 'FileIcon',
+                
             },
             {
                 title: 'Courier Company',
                 route: 'courier-company',
-                icon: 'FileIcon',
+               
             }
            
         ]
