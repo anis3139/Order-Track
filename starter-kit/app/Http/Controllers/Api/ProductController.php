@@ -110,6 +110,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+   
+
         $Product = Product::find($id);
         $Product->name = $request->name;
         $Product->brand_id = $request->brand_id;

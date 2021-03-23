@@ -1,8 +1,9 @@
 <template>
+  <!-- form -->
   <div class="card">
-    <div class="card-body">
+    <div class="card-body mt-2">
       <validation-observer ref="simpleRules">
-        <b-form @submit.prevent="productAdd" enctype="multipart/form-data">
+        <b-form @submit.prevent="productUpdate" enctype="multipart/form-data">
           <b-row>
             <b-col md="6" offset-md="3">
               <b-form-group>
@@ -14,49 +15,43 @@
                   <b-form-input
                     v-model="name"
                     :state="errors.length > 0 ? false : null"
-                    placeholder="Product Name"
+                    placeholder="Category Name"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
 
-            <b-col md="6" offset-md="3" class="mt-1">
+            <b-col md="6" offset-md="3" class="mt-2">
               <b-form-select
                 name="category_id"
-                v-model="CategoryAlls"
-                id="CategoryAll"
-                :options="CategoryAllOptions"
+                v-model="selectedCategory"
+                id="categoryAll"
+                :options="categories"
               >
-                <template v-slot:first>
-                  <option value="0">- Select Categoty -</option>
-                </template>
+                <template v-slot:first> </template>
               </b-form-select>
             </b-col>
 
             <b-col md="6" offset-md="3" class="mt-2">
               <b-form-select
                 name="brand_id"
-                v-model="BrandAlls"
-                id="BarandAll"
-                :options="BrandAllOptions"
+                v-model="selectedBrand"
+                id="brandAll"
+                :options="brands"
               >
-                <template v-slot:first>
-                  <option value="0">- Select Brand -</option>
-                </template>
+                <template v-slot:first> </template>
               </b-form-select>
             </b-col>
 
             <b-col md="6" offset-md="3" class="my-2">
               <b-form-select
                 name="vendor_id"
-                v-model="VendorAlls"
-                id="VendorAll"
-                :options="VendorAllOptions"
+                v-model="selectedVendor"
+                id="vendorAll"
+                :options="vendors"
               >
-                <template v-slot:first>
-                  <option value="0">- Select Vendor -</option>
-                </template>
+                <template v-slot:first> </template>
               </b-form-select>
             </b-col>
 
@@ -73,7 +68,6 @@
 </template>
 
 <script>
-import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import {
   BFormInput,
@@ -83,11 +77,13 @@ import {
   BCol,
   BButton,
   BCardText,
+  BFormFile,
+  BFormSelect,
 } from "bootstrap-vue";
 import { required, email } from "@validations";
 import axios from "axios";
-import { BFormFile } from "bootstrap-vue";
-import { BFormSelect } from "bootstrap-vue";
+import ToastificationContent from "@core/components/toastification/ToastificationContent";
+
 export default {
   components: {
     ValidationProvider,
@@ -105,118 +101,119 @@ export default {
   data() {
     return {
       name: "",
-      category_id: "",
+
       brand_id: "",
+      brands: "",
+      selectedBrand: null,
+
       vendor_id: "",
+      vendor: "",
+      selectedVendor: null,
+
+      category_id: "",
+      categories: [],
+      selectedCategory: null,
+
       required,
-      CategoryAlls: [],
-      CategoryAllOptions: [],
-      BrandAlls: [],
-      BrandAllOptions: [],
-      VendorAlls: [],
-      VendorAllOptions: [],
     };
   },
-  created() {
-    this.setCategoryData();
-    this.setBrandData();
-    this.setVendorData();
+  mounted() {
+    this.getData();
   },
 
   methods: {
-    setCategoryData: function () {
-      axios
-        .get("api/V1/category")
-        .then((resp) => {
-         
-          this.CategoryAlls = resp.data.CategoryAll;
-          for (var i = 0; i < this.CategoryAlls.length; i++) {
-            var option = [];
-            for (var key in this.CategoryAlls[i]) {
-              if (key == "id") {
-                option["value"] = this.CategoryAlls[i][key];
-              } else if (key == "name") {
-                option["text"] = this.CategoryAlls[i][key];
-              }
-            }
-            this.CategoryAllOptions.push(Object.assign({}, option));
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-
-    setBrandData: function () {
-      axios
-        .get("api/V1/brand")
-        .then((resp) => {
-        
-          this.BrandAlls = resp.data.allBrand;
-          for (var i = 0; i < this.BrandAlls.length; i++) {
-            var option = [];
-            for (var key in this.BrandAlls[i]) {
-              if (key == "id") {
-                option["value"] = this.BrandAlls[i][key];
-              } else if (key == "name") {
-                option["text"] = this.BrandAlls[i][key];
-              }
-            }
-            this.BrandAllOptions.push(Object.assign({}, option));
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-
-    setVendorData: function () {
-      axios
-        .get("api/V1/vendor")
-        .then((resp) => {
-        
-          this.VendorAlls = resp.data.Vendor;
-          for (var i = 0; i < this.VendorAlls.length; i++) {
-            var option = [];
-            for (var key in this.VendorAlls[i]) {
-              if (key == "id") {
-                option["value"] = this.VendorAlls[i][key];
-              } else if (key == "name") {
-                option["text"] = this.VendorAlls[i][key];
-              }
-            }
-            this.VendorAllOptions.push(Object.assign({}, option));
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-
     validationForm() {
       this.$refs.simpleRules.validate().then((success) => {
         if (success) {
         }
       });
     },
+    getData() {
+      this.$http
+        .get(`V1/product/${this.$route.params.id}`)
+        .then((res) => {
+          console.log(res.data);
 
-    productAdd() {
-      var data = {
-        name: this.name,
-        category_id: this.CategoryAlls,
-        brand_id: this.BrandAlls,
-        vendor_id: this.VendorAlls,
-        users_id: localStorage.getItem("users_id"),
-      };
-console.log(this.CategoryAlls);
-      axios
-        .post("api/V1/product", data)
+          // Changed Some Code
+          this.name = res.data.product.name;
+          this.category_id = res.data.product.category_id;
+          this.brand_id = res.data.product.brand_id;
+          this.vendor = res.data.product.vendor_id;
+
+          const categories = [];
+          categories.push({ value: null, text: "Select Category" });
+          res.data.categories.forEach((category) => {
+            if (res.data.product.category_id === category.id) {
+              this.selectedCategory = category.id;
+            }
+
+            categories.push({
+              value: category.id,
+              text: category.name,
+            });
+          });
+
+          this.categories = categories;
+
+          const brands = [];
+          brands.push({ value: null, text: "Select Brand" });
+          res.data.brand.forEach((brand) => {
+            if (res.data.product.brand_id === brand.id) {
+              this.selectedBrand = brand.id;
+            }
+
+            brands.push({
+              value: brand.id,
+              text: brand.name,
+            });
+          });
+
+          this.brands = brands;
+
+          const vendors = [];
+          vendors.push({ value: null, text: "Select Vendor" });
+          res.data.vendor.forEach((vendor) => {
+            if (res.data.product.vendor_id === vendor.id) {
+              this.selectedVendor = vendor.id;
+            }
+
+            vendors.push({
+              value: vendor.id,
+              text: vendor.name,
+            });
+          });
+
+          this.vendors = vendors;
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Something Wrong",
+              icon: "EditIcon",
+              variant: "error",
+            },
+          });
+        });
+    },
+
+    productUpdate() {
+    var product_data={
+      "name": this.name,
+      "category_id": this.selectedCategory,
+      "brand_id": this.selectedBrand,
+      "vendor_id": this.selectedVendor,
+    }
+    console.log(product_data);
+         
+      this.$http
+        .post(`V1/update-product/${this.$route.params.id}`, product_data)
         .then((response) => {
           console.log(response.data);
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: "Product Added",
+              title: "Product Updated",
               icon: "EditIcon",
               variant: "success",
             },
@@ -224,10 +221,11 @@ console.log(this.CategoryAlls);
           this.$router.push("/product");
         })
         .catch((error) => {
+          console.log(error);
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: "Product Added Failed",
+              title: "Product Updated Failed",
               icon: "EditIcon",
               variant: "warning",
             },
@@ -237,4 +235,3 @@ console.log(this.CategoryAlls);
   },
 };
 </script>
-

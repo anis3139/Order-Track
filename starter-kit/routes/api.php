@@ -69,6 +69,6 @@ Route::group([
     Route::post('update-vendor/{id}', [VendorController::class,'update']);
     
     Route::apiResource('product', ProductController::class);
-    Route::post('update-product/{id}', [VendorController::class,'update']);
+    Route::post('update-product/{id}', [ProductController::class,'update']);
 
 });
