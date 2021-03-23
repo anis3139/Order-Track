@@ -250,20 +250,20 @@ export default {
   methods: {
     productData() {
       this.$http.get("V1/product").then((res) => {
-       
+      console.log(res.data);
         const rows = [];
-        res.data.CategoryAll.forEach((element, i) => {
+        res.data.Product.forEach((element, i) => {
           rows.push({
             id: element.id,
             name: element.name,
-            brand: element.brand,
-            category: element.category ? element.category.name : "",
-            vendor: element.vendor ? element.vendor.name : "",
+            category: element.category ? element.category[0].name : "",
+            brand: element.brand ? element.brand[0].name : "",
+            vendor: element.vendor ? element.vendor[0].name : "",
          
             
           });
         });
-
+console.log(rows);
         this.rows = rows;
 
       }).catch((error)=>{

@@ -1,32 +1,6 @@
-export default [
-  {
-    title: 'Home',
-    route: 'home',
-    icon: 'HomeIcon',
-  },
-  {
-    title: 'Category',
-    route: 'category',
-    icon: 'FileIcon',
-  },
-  {
-    title: 'Products',
-    route: 'product',
-    icon: 'FileIcon',
-  },
-  {
-    title: 'Brands',
-    route: 'brand',
-    icon: 'FileIcon',
-  },
-  {
-    title: 'Courier Company',
-    route: 'courier-company',
-    icon: 'FileIcon',
-  },
-  {
-    title: 'Vendor',
-    route: 'vendor',
-    icon: 'FileIcon',
-  },
-]
+import dashboard from './dashboard'
+import appsAndPages from './apps-and-pages'
+
+
+// Array of sections
+export default [...dashboard, ...appsAndPages]

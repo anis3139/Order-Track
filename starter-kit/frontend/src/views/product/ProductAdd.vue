@@ -1,236 +1,240 @@
 <template>
-  <div>
-    <!-- search input -->
-    <div class="custom-search d-flex justify-content-end">
-      <b-form-group>
-        <div class="d-flex align-items-center">
-          <label class="mr-1">Search</label>
-          <b-form-input
-            v-model="searchTerm"
-            placeholder="Search"
-            type="text"
-            class="d-inline-block"
-          />
-        </div>
-      </b-form-group>
+  <div class="card">
+    <div class="card-body">
+      <validation-observer ref="simpleRules">
+        <b-form @submit.prevent="productAdd" enctype="multipart/form-data">
+          <b-row>
+            <b-col md="6" offset-md="3">
+              <b-form-group>
+                <validation-provider
+                  #default="{ errors }"
+                  name="name"
+                  rules="required"
+                >
+                  <b-form-input
+                    v-model="name"
+                    :state="errors.length > 0 ? false : null"
+                    placeholder="Product Name"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+
+            <b-col md="6" offset-md="3" class="mt-1">
+              <b-form-select
+                name="category_id"
+                v-model="CategoryAlls"
+                id="CategoryAll"
+                :options="CategoryAllOptions"
+              >
+                <template v-slot:first>
+                  <option value="0">- Select Categoty -</option>
+                </template>
+              </b-form-select>
+            </b-col>
+
+            <b-col md="6" offset-md="3" class="mt-2">
+              <b-form-select
+                name="brand_id"
+                v-model="BrandAlls"
+                id="BarandAll"
+                :options="BrandAllOptions"
+              >
+                <template v-slot:first>
+                  <option value="0">- Select Brand -</option>
+                </template>
+              </b-form-select>
+            </b-col>
+
+            <b-col md="6" offset-md="3" class="my-2">
+              <b-form-select
+                name="vendor_id"
+                v-model="VendorAlls"
+                id="VendorAll"
+                :options="VendorAllOptions"
+              >
+                <template v-slot:first>
+                  <option value="0">- Select Vendor -</option>
+                </template>
+              </b-form-select>
+            </b-col>
+
+            <b-col md="6" offset-md="3">
+              <b-button variant="primary" type="submit" @click="validationForm">
+                Submit
+              </b-button>
+            </b-col>
+          </b-row>
+        </b-form>
+      </validation-observer>
     </div>
-
-    <!-- table -->
-    <vue-good-table
-      :columns="columns"
-      :rows="rows"
-      :rtl="direction"
-      :search-options="{
-        enabled: true,
-        externalQuery: searchTerm }"
-      :select-options="{
-        enabled: true,
-        selectOnCheckboxOnly: true, // only select when checkbox is clicked instead of the row
-        selectionInfoClass: 'custom-class',
-        selectionText: 'rows selected',
-        clearSelectionText: 'clear',
-        disableSelectInfo: true, // disable the select info panel on top
-        selectAllByGroup: true, // when used in combination with a grouped table, add a checkbox in the header row to check/uncheck the entire group
-      }"
-      :pagination-options="{
-        enabled: true,
-        perPage:pageLength
-      }"
-    >
-      <template
-        slot="table-row"
-        slot-scope="props"
-      >
-
-        <!-- Column: Name -->
-        <span
-          v-if="props.column.field === 'fullName'"
-          class="text-nowrap"
-        >
-          
-          <span class="text-nowrap">{{ props.row.fullName }}</span>
-        </span>
-
-        <!-- Column: Status -->
-        <span v-else-if="props.column.field === 'status'">
-          <b-badge :variant="statusVariant(props.row.status)">
-            {{ props.row.status }}
-          </b-badge>
-        </span>
-
-        <!-- Column: Action -->
-        <span v-else-if="props.column.field === 'action'">
-          <span>
-            <b-dropdown
-              variant="link"
-              toggle-class="text-decoration-none"
-              no-caret
-            >
-              <template v-slot:button-content>
-                <feather-icon
-                  icon="MoreVerticalIcon"
-                  size="16"
-                  class="text-body align-middle mr-25"
-                />
-              </template>
-              <b-dropdown-item>
-                <feather-icon
-                  icon="Edit2Icon"
-                  class="mr-50"
-                />
-                <span>Edit</span>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                <feather-icon
-                  icon="TrashIcon"
-                  class="mr-50"
-                />
-                <span>Delete</span>
-              </b-dropdown-item>
-            </b-dropdown>
-          </span>
-        </span>
-
-        <!-- Column: Common -->
-        <span v-else>
-          {{ props.formattedRow[props.column.field] }}
-        </span>
-      </template>
-
-      <!-- pagination -->
-      <template
-        slot="pagination-bottom"
-        slot-scope="props"
-      >
-        <div class="d-flex justify-content-between flex-wrap">
-          <div class="d-flex align-items-center mb-0 mt-1">
-            <span class="text-nowrap ">
-              Showing 1 to
-            </span>
-            <b-form-select
-              v-model="pageLength"
-              :options="['3','5','10']"
-              class="mx-1"
-              @input="(value)=>props.perPageChanged({currentPerPage:value})"
-            />
-            <span class="text-nowrap"> of {{ props.total }} entries </span>
-          </div>
-          <div>
-            <b-pagination
-              :value="1"
-              :total-rows="props.total"
-              :per-page="pageLength"
-              first-number
-              last-number
-              align="right"
-              prev-class="prev-item"
-              next-class="next-item"
-              class="mt-1 mb-0"
-              @input="(value)=>props.pageChanged({currentPage:value})"
-            >
-              <template #prev-text>
-                <feather-icon
-                  icon="ChevronLeftIcon"
-                  size="18"
-                />
-              </template>
-              <template #next-text>
-                <feather-icon
-                  icon="ChevronRightIcon"
-                  size="18"
-                />
-              </template>
-            </b-pagination>
-          </div>
-        </div>
-      </template>
-    </vue-good-table>
   </div>
 </template>
 
 <script>
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import { ValidationProvider, ValidationObserver } from "vee-validate";
 import {
-  BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdown, BDropdownItem,
-} from 'bootstrap-vue'
-import { VueGoodTable } from 'vue-good-table'
-import 'vue-good-table/dist/vue-good-table.css'
-import store from '@/store/index'
-
+  BFormInput,
+  BFormGroup,
+  BForm,
+  BRow,
+  BCol,
+  BButton,
+  BCardText,
+} from "bootstrap-vue";
+import { required, email } from "@validations";
+import axios from "axios";
+import { BFormFile } from "bootstrap-vue";
+import { BFormSelect } from "bootstrap-vue";
 export default {
   components: {
-    VueGoodTable,
-    BAvatar,
-    BBadge,
-    BPagination,
-    BFormGroup,
+    ValidationProvider,
+    ValidationObserver,
+    BCardText,
     BFormInput,
+    BFormGroup,
+    BForm,
+    BRow,
+    BCol,
+    BButton,
+    BFormFile,
     BFormSelect,
-    BDropdown,
-    BDropdownItem,
   },
   data() {
     return {
-      pageLength: 3,
-      dir: false,
-      columns: [
-        {
-          label: 'Name',
-          field: 'fullName',
-        },
-        
-        {
-          label: 'Action',
-          field: 'action',
-        },
-      ],
-      rows: [{
-          "fullName": "Anis"
-      }],
-      searchTerm: '',
-      status: [{
-        1: 'Current',
-        2: 'Professional',
-        3: 'Rejected',
-        4: 'Resigned',
-        5: 'Applied',
-      },
-      {
-        1: 'light-primary',
-        2: 'light-success',
-        3: 'light-danger',
-        4: 'light-warning',
-        5: 'light-info',
-      }],
-    }
-  },
-  computed: {
-    statusVariant() {
-      const statusColor = {
-        /* eslint-disable key-spacing */
-        Current      : 'light-primary',
-        Professional : 'light-success',
-        Rejected     : 'light-danger',
-        Resigned     : 'light-warning',
-        Applied      : 'light-info',
-        /* eslint-enable key-spacing */
-      }
-
-      return status => statusColor[status]
-    },
-    direction() {
-      if (store.state.appConfig.isRTL) {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.dir = true
-        return this.dir
-      }
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.dir = false
-      return this.dir
-    },
+      name: "",
+      category_id: "",
+      brand_id: "",
+      vendor_id: "",
+      required,
+      CategoryAlls: [],
+      CategoryAllOptions: [],
+      BrandAlls: [],
+      BrandAllOptions: [],
+      VendorAlls: [],
+      VendorAllOptions: [],
+    };
   },
   created() {
-    this.$http.get('/good-table/basic')
-      .then(res => { this.rows = res.data })
+    this.setCategoryData();
+    this.setBrandData();
+    this.setVendorData();
   },
-}
+
+  methods: {
+    setCategoryData: function () {
+      axios
+        .get("api/V1/category")
+        .then((resp) => {
+         
+          this.CategoryAlls = resp.data.CategoryAll;
+          for (var i = 0; i < this.CategoryAlls.length; i++) {
+            var option = [];
+            for (var key in this.CategoryAlls[i]) {
+              if (key == "id") {
+                option["value"] = this.CategoryAlls[i][key];
+              } else if (key == "name") {
+                option["text"] = this.CategoryAlls[i][key];
+              }
+            }
+            this.CategoryAllOptions.push(Object.assign({}, option));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    setBrandData: function () {
+      axios
+        .get("api/V1/brand")
+        .then((resp) => {
+        
+          this.BrandAlls = resp.data.allBrand;
+          for (var i = 0; i < this.BrandAlls.length; i++) {
+            var option = [];
+            for (var key in this.BrandAlls[i]) {
+              if (key == "id") {
+                option["value"] = this.BrandAlls[i][key];
+              } else if (key == "name") {
+                option["text"] = this.BrandAlls[i][key];
+              }
+            }
+            this.BrandAllOptions.push(Object.assign({}, option));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    setVendorData: function () {
+      axios
+        .get("api/V1/vendor")
+        .then((resp) => {
+        
+          this.VendorAlls = resp.data.Vendor;
+          for (var i = 0; i < this.VendorAlls.length; i++) {
+            var option = [];
+            for (var key in this.VendorAlls[i]) {
+              if (key == "id") {
+                option["value"] = this.VendorAlls[i][key];
+              } else if (key == "name") {
+                option["text"] = this.VendorAlls[i][key];
+              }
+            }
+            this.VendorAllOptions.push(Object.assign({}, option));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    validationForm() {
+      this.$refs.simpleRules.validate().then((success) => {
+        if (success) {
+        }
+      });
+    },
+
+    productAdd() {
+      var data = {
+        name: this.name,
+        category_id: this.CategoryAlls,
+        brand_id: this.BrandAlls,
+        vendor_id: this.VendorAlls,
+        users_id: localStorage.getItem("users_id"),
+      };
+console.log(this.CategoryAlls);
+      axios
+        .post("api/V1/product", data)
+        .then((response) => {
+          console.log(response.data);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Product Added",
+              icon: "EditIcon",
+              variant: "success",
+            },
+          });
+          this.$router.push("/product");
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Product Added Failed",
+              icon: "EditIcon",
+              variant: "warning",
+            },
+          });
+        });
+    },
+  },
+};
 </script>
+
