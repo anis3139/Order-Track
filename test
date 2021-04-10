@@ -1,0 +1,22 @@
+      {
+           "customer_name": "Anis",
+            "customer_mobile": "01816366535",
+            "customer_address": "banani",
+            "parcel_type": "Broken",
+            "status": 1,
+            "order_date": "2021-04-10 00:00:00",
+            "courier_company_name_id": 2,
+            "users_id": 1,
+            "orderProducts": [{
+			
+"price":"100",
+"size":"100",
+"color":"100",
+"sku":"100",
+"quantity":"100",
+"order_id":"1",
+"product_id":"1",
+"users_id":"1"
+
+            }]
+        }

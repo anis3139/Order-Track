@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
-
+use Validator;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
@@ -44,47 +44,73 @@ class OrderController extends Controller
     {
 
 
+
+        $validator = validator::make($request->all(), [
+            'customer_name' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
         $customer_name = $request->Input('customer_name');
         $customer_mobile = $request->Input('customer_mobile');
         $customer_address =$request->Input('customer_address');
         $parcel_type = $request->Input('parcel_type');
         $status = $request->Input('status');
         $order_date = $request->Input('order_date');
-        $courier_company_name_id   = $request->Input('courier_company_name_id');
+        $courier_company_name_id= $request->Input('courier_company_name_id');
+
         $users_id  = $request->Input('users_id');
-        $orderProducts  = $request->Input('orderProduct');
-
-        $order=new Order();
-        $order->customer_name=$customer_name;
-        $order->customer_mobile=$customer_mobile;
-        $order->customer_address=$customer_address;
-        $order->parcel_type= $parcel_type;
-        $order->status= $status;
-        $order->order_date= $order_date;
-        $order->courier_company_name_id = $courier_company_name_id ;
-        $order->users_id= $users_id;
-        $order=$order->save();
-        return response()->json([
-            'message' => 'Order successfully Store',
-            'order' => $order
-        ], 201);
+        $orderProducts  = $request->Input('orderProducts');
 
 
-        foreach ($orderProducts as $orderProduct)
+
+
+
+
+        $order = Order::create(array_merge(
+            $validator->validated(),
+            ['customer_name'=>$customer_name],
+            ['customer_mobile'=>$customer_mobile],
+            ['customer_address'=>$customer_address],
+            ['parcel_type'=> $parcel_type],
+            ['status'=> $status],
+            ['order_date'=> $order_date],
+            ['courier_company_name_id' => $courier_company_name_id],
+            ['users_id'=> $users_id]
+        ));
+
+
+
+        foreach ($orderProducts as $key=> $orderProduct)
         {
+            // $order_product = OrderProduct::create(array_merge(
+            //     $validator->validated(),
+            //     ['price'=>$orderProduct['price']],
+            //     ['size'=>$orderProduct['size']],
+            //     ['color'=>$orderProduct['color']],
+            //     ['sku'=> $orderProduct['sku']],
+            //     ['quantity'=> $orderProduct['quantity']],
+            //     ['order_id'=> $order->id],
+            //     ['product_id' => $orderProduct['product_id']],
+            //     ['users_id'=> $orderProduct['users_id']]
+            // ));
+
             $order_product=new OrderProduct();
             $order_product->price=$orderProduct['price'];
             $order_product->size=$orderProduct['size'];
             $order_product->color=$orderProduct['color'];
             $order_product->sku=$orderProduct['sku'];
             $order_product->quantity=$orderProduct['quantity'];
-            $order_product->order_id =$orderProduct['order_id '];
+            $order_product->order_id =$order->id;
             $order_product->product_id=$orderProduct['product_id'];
             $order_product->users_id =$orderProduct['users_id'];
             $order_product= $order_product->save();
 
             return response()->json([
-                'message' => 'Order Product successfully Store',
+                'message' => 'Order  successfully Store',
+                'order' => $order,
                 'order_product' => $order_product
             ], 201);
 
@@ -136,3 +162,5 @@ class OrderController extends Controller
         //
     }
 }
+
+
