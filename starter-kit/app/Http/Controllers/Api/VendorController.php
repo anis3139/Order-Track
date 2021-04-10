@@ -10,7 +10,7 @@ use Validator;
 
 class VendorController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +18,8 @@ class VendorController extends Controller
      */
     public function index()
     {
-        $userId = Auth::user()->id;
-        $Vendor = Vendor::where('users_id',$userId)->get();
+
+        $Vendor = Vendor::latest()->get();
         return response()->json([
             'message' => 'Vendor All Data',
             'Vendor' => $Vendor
@@ -44,9 +44,9 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
-        $userId= Auth::user()->id;
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'users_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -56,7 +56,7 @@ class VendorController extends Controller
         $Vendor = Vendor::create(array_merge(
                     $validator->validated(),
                     ['name' => $request->name],
-                    ['users_id' => $userId]
+                    ['users_id' => $request->users_id]
                 ));
 
         return response()->json([
@@ -111,9 +111,9 @@ class VendorController extends Controller
                 'message' => 'Not successfully Update',
             ], 400);
         }
-                  
 
-        
+
+
     }
 
     /**
@@ -125,7 +125,7 @@ class VendorController extends Controller
     public function destroy($id)
     {
         $Vendor = Vendor::find($id);
-        
+
         $result = $Vendor->delete();
 
         if($result){

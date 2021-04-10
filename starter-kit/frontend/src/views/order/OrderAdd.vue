@@ -1,5 +1,7 @@
 <template>
   <!-- form -->
+    <div class="card">
+    <div class="card-body">
   <validation-observer ref="simpleRules">
     <b-form @submit.prevent="brandAdd" enctype="multipart/form-data">
       <b-row>
@@ -20,7 +22,7 @@
           </b-form-group>
         </b-col>
 
-      
+
         <b-col md="6" offset-md="3">
           <b-button variant="primary" type="submit" @click="validationForm">
             Submit
@@ -29,6 +31,8 @@
       </b-row>
     </b-form>
   </validation-observer>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -66,17 +70,17 @@ export default {
       image: [],
       name: "",
       required,
- 
+
     };
   },
-  
+
 
   methods: {
     onFileChange(event) {
       this.image = event.target.files[0];
       console.log(event.target.files[0]);
     },
-   
+
     validationForm() {
       this.$refs.simpleRules.validate().then((success) => {
         if (success) {
@@ -88,7 +92,7 @@ export default {
       var formData = new FormData();
       formData.append("name", this.name);
       formData.append("users_id", localStorage.getItem("users_id"));
-  
+
 
       axios.post(
           "api/V1/brand", formData

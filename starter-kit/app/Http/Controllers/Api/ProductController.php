@@ -13,8 +13,8 @@ use Validator;
 
 class ProductController extends Controller
 {
-    
-    
+
+
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +22,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $userId = Auth::user()->id;
-        $Product = Product::with(['category','brand','vendor'])->where('users_id',$userId)->get();
+
+        $Product = Product::with(['category','brand','vendor'])->latest()->get();
         return response()->json([
             'message' => 'Product All Data',
             'Product' => $Product
@@ -48,7 +48,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $userId=  Auth::user()->id;
         $validator = Validator::make($request->all(), [
 
 
@@ -66,9 +65,9 @@ class ProductController extends Controller
         $Product = Product::create(array_merge(
                     $validator->validated(),
                     ['name' => $request->name],
-                    ['users_id' => $userId],
+                    ['users_id' => $request->users_id],
                     ['brand_id' => $request->brand_id],
-                    ['category_id' => $request->category_id], 
+                    ['category_id' => $request->category_id],
                     ['vendor_id' => $request->vendor_id],
                 ));
 
@@ -114,7 +113,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
 
-   
+
 
         $Product = Product::find($id);
         $Product->name = $request->name;
@@ -133,9 +132,9 @@ class ProductController extends Controller
                 'message' => 'Not successfully Update',
             ], 400);
         }
-                  
 
-        
+
+
     }
 
     /**
@@ -147,7 +146,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $Product = Product::find($id);
-        
+
         $result = $Product->delete();
 
         if($result){

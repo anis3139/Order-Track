@@ -30,31 +30,36 @@ export default [
         icon: "ShoppingBagIcon",
         children: [
 
-           
+
             {
                 title: 'Category',
                 route: 'category',
-               
+
             },
             {
                 title: 'Products',
                 route: 'product',
-                
+
             },
             {
                 title: 'Brands',
                 route: 'brand',
-                
+
             },
             {
                 title: 'Courier Company',
                 route: 'courier-company',
-               
+
+            },
+            {
+                title: 'Vendor',
+                route: 'vendor',
+
             }
-           
+
         ]
     },
-    
+
 
 
     {
@@ -94,7 +99,7 @@ export default [
         ]
     },
 
-    
+
     {
         title: "Invoice",
         icon: "FileTextIcon",

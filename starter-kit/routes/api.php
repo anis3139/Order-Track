@@ -38,7 +38,7 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']); 
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);
 
     Route::apiResource('role', RoleController::class);
     Route::apiResource('user', UserController::class);
@@ -54,10 +54,10 @@ Route::group([
    // 'namespace' => 'Api\V1'
 
 ], function ($router) {
-    Route::apiResource('category', CategoryController::class); 
+    Route::apiResource('category', CategoryController::class);
     Route::post('update-category/{id}', [CategoryController::class,'update']);
 
-    Route::apiResource('brand', BrandController::class); 
+    Route::apiResource('brand', BrandController::class);
     Route::post('update-brand/{id}', [BrandController::class,'update']);
 
 
@@ -67,7 +67,7 @@ Route::group([
 
     Route::apiResource('vendor', VendorController::class);
     Route::post('update-vendor/{id}', [VendorController::class,'update']);
-    
+
     Route::apiResource('product', ProductController::class);
     Route::post('update-product/{id}', [ProductController::class,'update']);
 

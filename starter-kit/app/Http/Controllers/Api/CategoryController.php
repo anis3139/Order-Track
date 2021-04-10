@@ -10,7 +10,7 @@ use Validator;
 
 class CategoryController extends Controller
 {
-    
+
      /**
      * Display a listing of the resource.
      *
@@ -18,8 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $userId=  Auth::user()->id;
-        $CategoryAll = Category::where('users_id',$userId)->latest()->get();
+
+        $CategoryAll = Category::latest()->get();
         return response()->json([
             'message' => 'Category All Data',
             'CategoryAll' => $CategoryAll
@@ -44,7 +44,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $userId=  Auth::user()->id;
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -56,7 +56,7 @@ class CategoryController extends Controller
         $Category = Category::create(array_merge(
                     $validator->validated(),
                     ['name' => $request->name],
-                    ['users_id' => $userId]
+                    ['users_id' => $request->users_id]
                 ));
 
         return response()->json([
@@ -111,9 +111,9 @@ class CategoryController extends Controller
                 'message' => 'Category Not successfully Update',
             ], 400);
         }
-                  
 
-        
+
+
     }
 
     /**
@@ -125,7 +125,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $Category = Category::find($id);
-        
+
         $result = $Category->delete();
 
         if($result){

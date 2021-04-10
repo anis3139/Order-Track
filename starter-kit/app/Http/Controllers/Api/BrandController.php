@@ -17,7 +17,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $allBrand = Brand::all();
+        $allBrand = Brand::latest()->get();
         return response()->json([
             'message' => 'Brand Data',
             'allBrand' => $allBrand
@@ -44,6 +44,7 @@ class BrandController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'users_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -108,9 +109,9 @@ class BrandController extends Controller
                 'message' => 'Brand Not successfully Update',
             ], 400);
         }
-                  
 
-        
+
+
     }
 
     /**
@@ -122,7 +123,7 @@ class BrandController extends Controller
     public function destroy($id)
     {
         $Brand = Brand::find($id);
-        
+
         $result = $Brand->delete();
 
         if($result){

@@ -16,8 +16,8 @@ class CourierCompanyNameController extends Controller
      */
     public function index()
     {
-         $userId = Auth::user()->id;
-        $CourierCompanyName = CourierCompanyName::where('users_id',$userId)->get();
+
+        $CourierCompanyName = CourierCompanyName::latest()->get();
         return response()->json([
             'message' => 'All Data',
             'CourierCompanyName' => $CourierCompanyName
@@ -42,10 +42,11 @@ class CourierCompanyNameController extends Controller
      */
     public function store(Request $request)
     {
-         $userId=  Auth::user()->id;
-         
+
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'users_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -55,7 +56,7 @@ class CourierCompanyNameController extends Controller
         $CourierCompanyName = CourierCompanyName::create(array_merge(
                     $validator->validated(),
                     ['name' => $request->name],
-                    ['users_id' => $userId]
+                    ['users_id' => $request->users_id]
                 ));
 
         return response()->json([
@@ -110,9 +111,9 @@ class CourierCompanyNameController extends Controller
                 'message' => 'Not successfully Update',
             ], 400);
         }
-                  
 
-        
+
+
     }
 
     /**
@@ -124,7 +125,7 @@ class CourierCompanyNameController extends Controller
     public function destroy($id)
     {
         $CourierCompanyName = CourierCompanyName::find($id);
-        
+
         $result = $CourierCompanyName->delete();
 
         if($result){

@@ -1,34 +1,32 @@
 <template>
   <!-- form -->
-  <validation-observer ref="simpleRules">
-    <b-form @submit.prevent="categoryAdd" enctype="multipart/form-data">
-      <b-row>
-        <b-col md="6" offset-md="3">
-          <b-form-group>
-            <validation-provider
-              #default="{ errors }"
-              name="name"
-              rules="required"
-            >
-              <b-form-input
-                v-model="name"
-                :state="errors.length > 0 ? false : null"
-                placeholder="Category Name"
-              />
-              <small class="text-danger">{{ errors[0] }}</small>
-            </validation-provider>
-          </b-form-group>
-        </b-col>
 
-      
-        <b-col md="6" offset-md="3">
-          <b-button variant="primary" type="submit" @click="validationForm">
-            Submit
-          </b-button>
-        </b-col>
-      </b-row>
-    </b-form>
-  </validation-observer>
+  <div class="card">
+    <div class="card-body">
+      <validation-observer ref="simpleRules">
+        <b-form @submit.prevent="categoryAdd" enctype="multipart/form-data">
+          <b-row>
+            <b-col md="6" offset-md="3">
+              <b-form-group>
+                <validation-provider #default="{ errors }" name="name" rules="required">
+                  <b-form-input
+                    v-model="name"
+                    :state="errors.length > 0 ? false : null"
+                    placeholder="Category Name"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+
+            <b-col md="6" offset-md="3">
+              <b-button variant="primary" type="submit" @click="validationForm">Submit</b-button>
+            </b-col>
+          </b-row>
+        </b-form>
+      </validation-observer>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -66,17 +64,15 @@ export default {
       image: [],
       name: "",
       required,
- 
     };
   },
-  
 
   methods: {
     onFileChange(event) {
       this.image = event.target.files[0];
       console.log(event.target.files[0]);
     },
-   
+
     validationForm() {
       this.$refs.simpleRules.validate().then((success) => {
         if (success) {
@@ -88,12 +84,9 @@ export default {
       var formData = new FormData();
       formData.append("name", this.name);
       formData.append("users_id", localStorage.getItem("users_id"));
-  
 
-      axios.post(
-          "api/V1/category", formData
-
-        )
+      axios
+        .post("api/V1/category", formData)
         .then((response) => {
           console.log(response.data);
           this.$toast({

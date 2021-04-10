@@ -1,5 +1,7 @@
 <template>
   <!-- form -->
+  <div class="card">
+    <div class="card-body">
   <validation-observer ref="simpleRules">
     <b-form @submit.prevent="categoryUpdate" enctype="multipart/form-data">
       <b-row>
@@ -20,7 +22,7 @@
           </b-form-group>
         </b-col>
 
-        
+
         <b-col md="6" offset-md="3">
           <b-button variant="primary" type="submit" @click="validationForm">
             Submit
@@ -29,6 +31,8 @@
       </b-row>
     </b-form>
   </validation-observer>
+   </div>
+  </div>
 </template>
 
 <script>
@@ -63,7 +67,7 @@ export default {
     BFormSelect,
   },
   data() {
-    return { 
+    return {
       name: "",
       required,
 
@@ -74,7 +78,7 @@ export default {
   },
 
   methods: {
-  
+
     validationForm() {
       this.$refs.simpleRules.validate().then((success) => {
         if (success) {
