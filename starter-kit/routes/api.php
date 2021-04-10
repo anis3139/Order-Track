@@ -7,12 +7,14 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CourierCompanyNameController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\VendorController;
 
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PermissionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -70,5 +72,8 @@ Route::group([
 
     Route::apiResource('product', ProductController::class);
     Route::post('update-product/{id}', [ProductController::class,'update']);
+
+    Route::apiResource('order', OrderController::class);
+    Route::post('update-order/{id}', [OrderController::class,'update']);
 
 });
