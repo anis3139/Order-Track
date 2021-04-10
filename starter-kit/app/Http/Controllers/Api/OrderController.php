@@ -85,17 +85,7 @@ class OrderController extends Controller
 
         foreach ($orderProducts as $key=> $orderProduct)
         {
-            // $order_product = OrderProduct::create(array_merge(
-            //     $validator->validated(),
-            //     ['price'=>$orderProduct['price']],
-            //     ['size'=>$orderProduct['size']],
-            //     ['color'=>$orderProduct['color']],
-            //     ['sku'=> $orderProduct['sku']],
-            //     ['quantity'=> $orderProduct['quantity']],
-            //     ['order_id'=> $order->id],
-            //     ['product_id' => $orderProduct['product_id']],
-            //     ['users_id'=> $orderProduct['users_id']]
-            // ));
+
 
             $order_product=new OrderProduct();
             $order_product->price=$orderProduct['price'];
@@ -108,13 +98,15 @@ class OrderController extends Controller
             $order_product->users_id =$orderProduct['users_id'];
             $order_product= $order_product->save();
 
-            return response()->json([
-                'message' => 'Order  successfully Store',
-                'order' => $order,
-                'order_product' => $order_product
-            ], 201);
 
         }
+
+        return response()->json([
+            'message' => 'Order  successfully Store',
+            'order' => $order,
+            'order_product' => $order_product
+        ], 201);
+
     }
 
     /**
@@ -123,9 +115,10 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $data['order'] = Order::with(['orderProducts', 'orderProducts.product'])->find($id);
+        return response()->json($data, 200);
     }
 
     /**
