@@ -47,6 +47,12 @@ class OrderController extends Controller
 
         $validator = validator::make($request->all(), [
             'customer_name' => 'required',
+            'customer_mobile' => 'required|| min:10|| max:18',
+            'customer_address' => 'required',
+            'customer_name' => 'required',
+            'status' => 'required',
+            'users_id' => 'required',
+            'orderProducts' => 'required',
         ]);
 
         if($validator->fails()){
@@ -139,9 +145,44 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request,  $id)
     {
-        //
+
+        $validator = validator::make($request->all(), [
+            'customer_name' => 'required',
+            'customer_mobile' => 'required|| min:10|| max:18',
+            'customer_address' => 'required',
+            'customer_name' => 'required',
+            'status' => 'required',
+            'users_id' => 'required',
+            'orderProducts' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $order = Order::find($id);
+        $order->customer_name = $request->customer_name;
+        $order->customer_mobile = $request->customer_mobile;
+        $order->customer_address = $request->customer_address;
+        $order->customer_name = $request->customer_name;
+        $order->status = $request->status;
+        $order->users_id = $request->users_id;
+        $order->parcel_type = $request->parcel_type;
+        $result = $order->save();
+
+
+        if($result){
+            return response()->json([
+                'message' => 'Order successfully Update',
+                'Order' => $order
+            ], 201);
+        }else{
+            return response()->json([
+                'message' => 'Order Not successfully Update',
+            ], 400);
+        }
     }
 
     /**
@@ -150,9 +191,21 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
-        //
+        $order = Order::find($id);
+
+        $result = $order->delete();
+
+        if($result){
+            return response()->json([
+                'message' => 'Order successfully Delete',
+            ], 201);
+        }else{
+            return response()->json([
+                'message' => 'Order Not successfully Delete',
+            ], 400);
+        }
     }
 }
 
